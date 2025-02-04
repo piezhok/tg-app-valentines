@@ -1,9 +1,9 @@
 <template>
-    <div class="letter-card glass">
+    <div class="main-card letter-card glass">
         <div class="header">
-            <div class="back-button">
-            <span>&lt;</span>
-            </div>
+            <router-link to="/received" class="back-button">
+                <span>&lt;</span>
+            </router-link>
             <div class="username">@piezhok</div>
             <div class="delete-button">
             <span>🗑</span>
@@ -17,19 +17,19 @@
 
 <script>
 export default {
-  name: 'LetterInfo'
+    name: 'LetterInfo'
 }
 </script>
 
 <style scoped>
 .letter-card {
-    border-radius: 12px;
-    width: 100%;
-    height: 100%;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+    //border-radius: 12px;
+    //width: 100%;
+    //height: 100%;
+    //color: white;
+    //display: flex;
+    //flex-direction: column;
+    //flex-grow: 1;
 }
 
 .header {

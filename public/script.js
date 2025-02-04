@@ -1,5 +1,4 @@
-const received = {
-    "cards": [ {
+const received = [ {
         "id": 1,
         "sender_telegram_id": 0,
         "receiver_telegram_id": 0,
@@ -49,5 +48,4 @@ const received = {
         "created_at": "string",
         "anonymous": true
     }
-    ]
-}
+]

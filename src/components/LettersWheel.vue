@@ -1,6 +1,9 @@
 <script setup>
-import {ref} from "vue";
+import {ref, watch} from "vue";
+import {useRoute} from "vue-router";
+import {useStore} from "vuex";
 
+const currentLetter = ref(0);
 const lowestLetter = ref(2);
 const rotation = ref(0);
 const opacity = ref(0);
@@ -8,13 +11,40 @@ let angle = 0;
 let temp = 0;
 const isDragging = ref(false);
 
+// const props = defineProps(['type']);    // received || sent
+const route = useRoute()
+const store = useStore();
+watch(() => route.fullPath, (path) => {
+    if (path.split("/")[2] != undefined) {
+        const type = path.split("/")[1];
+        const id = path.split("/")[2];
+        currentLetter.value = parseInt(id) - 1;
+        const state = type == 'received'?store.state.received:store.state.sent;
+        console.log(state);
+    }
+}, { immediate: true })
+
+// watch(() => route.path, () => {
+//     currentLetter.value = parseInt(route.state.id)-1;
+// });
+// onBeforeRouteUpdate((to) => {
+//     currentLetter.value = parseInt(to.path)-1;
+//     console.log(currentLetter.value);
+// });
+
+
 const rotateWheel = (isToNext = true) => {
     if (isToNext) {
+        currentLetter.value -= 1;
+        if (currentLetter.value < 0) {
+            currentLetter.value = 3;
+        }
         lowestLetter.value = (lowestLetter.value+1)%4;
         rotation.value -= temp;
         rotation.value += -90;
     } else {
-        lowestLetter.value = (lowestLetter.value-1)%4;
+        currentLetter.value = (currentLetter.value+1)%4
+        lowestLetter.value -= 1;
         if (lowestLetter.value < 0) {
             lowestLetter.value = 3;
         }
@@ -48,12 +78,6 @@ const touchMove = (event) => {
     if (!isDragging.value) return;
     let diffX = event.touches[0].clientX - touchStartX;
     moveIt(diffX);
-    // if (Math.abs(diffX) < 20) return;
-    // rotation.value -= temp;
-    // angle = getAngle(diffX);
-    // temp = angle;
-    // rotation.value += angle;
-    // opacity.value = Math.abs(angle)/100;
 };
 const touchEnd = (event) => {
     isDragging.value = false;
@@ -78,16 +102,6 @@ const mouseMove = (event) => {
     if (!isDragging.value) return;
     let diffX = event.clientX - mouseStartX;
     moveIt(diffX);
-    // if (Math.abs(diffX) < 20) return;
-    // angle = getAngle(diffX);
-    // if (Math.abs(angle) > 45) return;
-    // rotation.value -= temp;
-    // temp = angle;
-    // if (Math.floor(angle)%10 === 0) {
-    //     console.log(angle);
-    // }
-    // rotation.value += angle;
-    // opacity.value = Math.abs(angle)/100;
 }
 requestAnimationFrame(mouseMove);
 const mouseUp = (event) => {
@@ -106,7 +120,7 @@ const mouseUp = (event) => {
 </script>
 
 <template>
-    <div class="wheel_container">
+    <div class="wheel_container" :class="{mini: $route.path == '/received'}">
         <div class="wheel_wrapper" :style="{transform: `rotate(${rotation}deg)`}"
              @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd"
              @touchcancel="touchEnd"
@@ -128,14 +142,15 @@ const mouseUp = (event) => {
             </div>
 <!--            <div class="letter_container" data-index="2">-->
         </div>
-            <div class="wheel-navigation_container">
-                <div class="arrow-btn_box to-left" @click="rotateWheel(false)">
-                    <img src="@/assets/arrow-left.svg" alt="<">
-                </div>
-                <div class="arrow-btn_box to-right" @click="rotateWheel">
-                    <img src="@/assets/arrow-right.svg" alt=">">
-                </div>
-            </div>
+<!--            <div class="wheel-navigation_container">-->
+<!--                <div class="arrow-btn_box to-left" @click="rotateWheel(false)">-->
+<!--                    <img src="@/assets/arrow-left.svg" alt="<">-->
+<!--                </div>-->
+<!--                <div class="arrow-btn_box to-right" @click="rotateWheel">-->
+<!--                    <img src="@/assets/arrow-right.svg" alt=">">-->
+<!--                </div>-->
+<!--            </div>-->
+
 <!--                <img src="@/assets/heart.svg" alt="">-->
 <!--            </div>-->
 <!--            <div class="letter_container" data-index="3">-->
@@ -147,7 +162,7 @@ const mouseUp = (event) => {
     </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
     .wheel_container {
         position: absolute;
         display: flex;
@@ -159,7 +174,11 @@ const mouseUp = (event) => {
         //transform: translateY(19.75rem);
         //transform: translateY(19.5rem);
         transform: translateY(16rem);
+        transition: transform 0.5s ease;
         //margin-top: 19.5rem;
+        * {
+            transition: all 0.5s;
+        }
     }
 
     .wheel_wrapper {
@@ -202,7 +221,7 @@ const mouseUp = (event) => {
     }
 
     .hidden {
-        opacity: 0%;
+        opacity: 0;
     }
 
     .letter_container>img {
@@ -240,6 +259,7 @@ const mouseUp = (event) => {
         position: absolute;
         bottom: .375rem;
         color: #FC6F95;
+        transition: opacity .5s !important;
         //justify-self: bottom;
     }
 
@@ -263,5 +283,28 @@ const mouseUp = (event) => {
     .arrow-btn_box>img {
         width: 100%;
         height: 100%;
+    }
+
+    .mini {
+        //width: 4rem;
+        //height: 4rem;
+        transform: translateY(16rem) scale(30%);
+        //.wheel_wrapper {
+            //transform: rotate(0deg);
+        //}
+
+        .wheel_wrapper {
+            transition: none;
+        }
+
+        .letter_container {
+            :not(img) {
+                opacity: 0;
+            }
+        }
+
+        //.letter_container :not(:nth-child(1)) {
+        //    opacity: 0;
+        //}
     }
 </style>
