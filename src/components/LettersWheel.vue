@@ -65,10 +65,16 @@ onMounted(() => {
 //     currentLetter.value = parseInt(to.path)-1;
 //     console.log(currentLetter.value);
 // });
-const subtractNum = (n, k = (quantity.value > 0 && quantity.value <= 2 ? quantity.value : 4)) => {
+const subtractNum = (n, k = (quantity.value > 0 && quantity.value <= 2 ? quantity.value : 4), isEqualZero = false) => {
     n -= 1;
-    if (n < 0) {
-        n = k-1;
+    if (!isEqualZero) {
+        if (n < 0) {
+            n = k-1;
+        }
+    } else {
+        if (n <= 0) {
+            n = k-1;
+        }
     }
     return n;
 }
@@ -81,7 +87,7 @@ const rotateWheel = (isToNext = true) => {
         // if (currentLetter.value < 0) {
         //     currentLetter.value = 3;
         // }
-        router.push(`/received/${addNum(parseInt(route.params.id), quantity.value)}`);
+        router.push(`/received/${addNum(parseInt(route.params.id), quantity.value, true)}`);
         currentLetter.value = addNum(currentLetter.value);
         lowestLetterNum.value = addNum(startElements.value[currentLetter.value], quantity.value);
         startElements.value.splice(lowestLetter.value, 1, lowestLetterNum.value);
@@ -90,7 +96,7 @@ const rotateWheel = (isToNext = true) => {
         rotation.value -= temp;
         rotation.value += -90;
     } else {
-        router.push(`/received/${subtractNum(parseInt(route.params.id), quantity.value)}`);
+        router.push(`/received/${subtractNum(parseInt(route.params.id), quantity.value, true)}`);
         currentLetter.value = subtractNum(currentLetter.value);
         lowestLetterNum.value = subtractNum(startElements.value[currentLetter.value], quantity.value);
         startElements.value.splice(lowestLetter.value, 1, lowestLetterNum.value);

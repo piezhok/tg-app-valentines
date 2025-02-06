@@ -11,7 +11,7 @@ store.dispatch("fetchReceived");
 </script>
 
 <template>
-    <div class="main-card glass" :class="{list: $route.fullPath == '/received'}">
+    <div class="main-card glass" :class="{list: $route.fullPath == '/received'||$route.fullPath == '/sent'}">
         <RouterView v-slot="{ Component }">
             <Transition :name="$route.meta.transition" mode="out-in">
 <!--                 <KeepAlive>-->
