@@ -20,7 +20,8 @@
     const test = ref();
     onMounted(() => {
         initData.value = window.Telegram.WebApp.initData;
-        console.log(initData.value.hash);
+        console.log(initData.value);
+        console.log(initData.value.split("hash")[1]);
         test.value = getSmth();
         console.log(test.value);
     })
