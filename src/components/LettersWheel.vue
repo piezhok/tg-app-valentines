@@ -209,6 +209,7 @@ const mouseUp = (event) => {
         align-items: center;
         //position: relative;
         width: 37.5rem;
+        max-width: 100vw;
         height: 37.5rem;
         //transform: translateY(19.75rem);
         //transform: translateY(19.5rem);
@@ -223,6 +224,7 @@ const mouseUp = (event) => {
     .wheel_wrapper {
         transition: transform .5s;
         width: 100%;
+        max-width: 100vw;
         height: 100%;
         display: flex;
         align-items: center;
