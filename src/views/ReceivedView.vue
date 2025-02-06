@@ -11,7 +11,7 @@ const receivedJson = computed(() => {
 </script>
 
 <template>
-    <div class="">
+    <div class="inner">
         <router-link v-for="n in receivedJson.length" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
                 <img src="" alt="avatar">

@@ -203,7 +203,8 @@ const mouseUp = (event) => {
 
 <style scoped lang="scss">
     .wheel_container {
-        position: absolute;
+        position: fixed;
+        //overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -222,6 +223,7 @@ const mouseUp = (event) => {
     }
 
     .wheel_wrapper {
+        //position: absolute;
         transition: transform .5s;
         width: 100%;
         max-width: 100vw;
@@ -333,9 +335,11 @@ const mouseUp = (event) => {
         //.wheel_wrapper {
             //transform: rotate(0deg);
         //}
-
         .wheel_wrapper {
             //transition: none;
+            .letter_container:not(:nth-child(1)) {
+                opacity: 0 !important;
+            }
         }
 
         .letter_container {
@@ -343,6 +347,7 @@ const mouseUp = (event) => {
                 opacity: 0;
             }
         }
+
 
         //.letter_container :not(:nth-child(1)) {
         //    opacity: 0;
