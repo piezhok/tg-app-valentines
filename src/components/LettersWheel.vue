@@ -187,7 +187,7 @@ const mouseUp = (event) => {
              @touchcancel="touchEnd"
              @mousedown="mouseDown" @mouseup="mouseUp"
              @mousemove="mouseMove" @mouseleave="mouseUp">
-            <div v-for="n in 4" class="letter_container" :data-index="n" :key="n" :style="{opacity: h = lowestLetter+1 == n?opacity:100}">
+            <div v-for="n in 4" class="letter_container" :class="{'lowest-letter': lowestLetter+1 == n}" :data-index="n" :key="n" :style="{opacity: h = lowestLetter+1 == n?opacity:100}">
                 <img src="@/assets/heart.svg" :alt="n">
                 <div class="avatars_container">
                     <div class="avatar_box sender-avatar">
@@ -269,6 +269,12 @@ const mouseUp = (event) => {
         transition: all .5s;
     }
 
+    .lowest-letter {
+        :not(img) {
+            opacity: 0;
+        }
+    }
+
     .hidden {
         opacity: 0;
     }
@@ -343,9 +349,9 @@ const mouseUp = (event) => {
         //}
         .wheel_wrapper {
             //transition: none;
-            .letter_container:not(:nth-child(1)) {
-                opacity: 0 !important;
-            }
+            //.letter_container:not(:nth-child(1)) {
+            //    opacity: 0 !important;
+            //}
         }
 
         .letter_container {
