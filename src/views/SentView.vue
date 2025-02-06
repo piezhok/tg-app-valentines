@@ -14,14 +14,15 @@
         return response;
     }
 
+    const test = ref();
     onMounted(() => {
-        const test = getSmth();
+        test.value = getSmth();
         console.log(test);
     })
 </script>
 
 <template>
-    <div>2</div>
+    <div>{{ test }}</div>
 </template>
 
 <style scoped>
