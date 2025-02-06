@@ -16,7 +16,7 @@
 
     const test = ref();
     onMounted(() => {
-        test.value = Telegram.WebApp.initData;
+        test.value = window.Telegram.WebApp.initData;
         console.log(test.value);
     })
 </script>
