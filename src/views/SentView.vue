@@ -1,22 +1,27 @@
 <script setup>
     import {onMounted, ref} from "vue";
 
-    // async function getSmth() {
-    //     const smth = await fetch("http://45.82.253.8:5000/api/cards/sent/", {
-    //         method: 'GET',
-    //         mode: 'no-cors',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         }
-    //     });
-    //     const response = await smth.json();
-    //     console.log(response);
-    //     return response;
-    // }
+    async function getSmth() {
+        const smth = await fetch("http://45.82.253.8:5000/api/cards", {
+            method: 'GET',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            telegram_hash: "a1dd914b90a7b78eabbff79ff99a6dc214668c658926c5d37a604490ae6bf69a",
+            user_id: 404535053
+        });
+        const response = await smth.json();
+        console.log(response);
+        return response;
+    }
 
+    const initData = ref();
     const test = ref();
     onMounted(() => {
-        test.value = window.Telegram.WebApp.initData;
+        initData.value = window.Telegram.WebApp.initData;
+        console.log(initData.value.hash);
+        test.value = getSmth();
         console.log(test.value);
     })
 </script>
