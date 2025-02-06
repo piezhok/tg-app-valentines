@@ -2,12 +2,12 @@
 import NavBar from "@/components/NavBar.vue";
 import LettersWheel from "@/components/LettersWheel.vue";
 import {useStore} from "vuex";
-import {onBeforeMount} from "vue";
 
 const store = useStore();
-onBeforeMount(() => {
-    store.dispatch("fetchReceived");
-})
+// onBeforeMount(() => {
+//     store.dispatch("fetchReceived");
+// })
+store.dispatch("fetchReceived");
 </script>
 
 <template>

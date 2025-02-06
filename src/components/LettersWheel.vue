@@ -1,10 +1,13 @@
 <script setup>
-import {ref, watch} from "vue";
-import {useRoute} from "vue-router";
+import {ref, watch, computed, onMounted} from "vue";
+import {useRoute, useRouter} from "vue-router";
 import {useStore} from "vuex";
 
+let startElements = ref([]);
+const quantity = ref(0);
 const currentLetter = ref(0);
 const lowestLetter = ref(2);
+const lowestLetterNum = ref();
 const rotation = ref(0);
 const opacity = ref(0);
 let angle = 0;
@@ -12,18 +15,49 @@ let temp = 0;
 const isDragging = ref(false);
 
 // const props = defineProps(['type']);    // received || sent
-const route = useRoute()
+const route = useRoute();
+const router = useRouter();
 const store = useStore();
-watch(() => route.fullPath, (path) => {
-    if (path.split("/")[2] != undefined) {
-        const type = path.split("/")[1];
-        const id = path.split("/")[2];
-        currentLetter.value = parseInt(id) - 1;
-        const state = type == 'received'?store.state.received:store.state.sent;
-        console.log(state);
+const state = computed(() => {
+    return store.state;
+})
+const json = ref();
+watch(() => route.fullPath, (toPath, fromPath) => {
+    const to = String(toPath);
+    const from = String(fromPath);
+    if (to.split("/")[2] == undefined && from.split("/")[2] != undefined) {
+        rotation.value = 0;
+        currentLetter.value = 0;
+        lowestLetter.value = 2;
+    } else if (to.split("/")[2] != undefined) {
+        const type = to.split("/")[1];
+        const id = parseInt(to.split("/")[2]);
+
+        if (from.split("/")[2] == undefined) {           // from list to letter
+            // rotation.value = 0;
+            // currentLetter.value = 0;
+            // lowestLetter.value = 2;
+            json.value = type == 'received'?state.value.received:state.value.sent;
+            quantity.value = json.value.length ? json.value.length : 0;
+            const idIndex = json.value.findIndex(letter => letter.id == id);
+            startElements.value = [];
+            for (let i = 0; i < 4; i++) {
+                if (i === 3) {
+                    if (idIndex-1 <= 0)
+                        startElements.value.push(quantity.value-1);
+                    else
+                        startElements.value.push((idIndex-1) % quantity.value)
+                } else
+                    startElements.value.push((idIndex+i) % quantity.value);
+            }
+            lowestLetterNum.value = startElements.value[2];
+        }
+        // const idIndex = json.value.indexOf(id);
     }
 }, { immediate: true })
 
+onMounted(() => {
+})
 // watch(() => route.path, () => {
 //     currentLetter.value = parseInt(route.state.id)-1;
 // });
@@ -31,22 +65,39 @@ watch(() => route.fullPath, (path) => {
 //     currentLetter.value = parseInt(to.path)-1;
 //     console.log(currentLetter.value);
 // });
-
-
+const subtractNum = (n, k = (quantity.value > 0 && quantity.value <= 2 ? quantity.value : 4)) => {
+    n -= 1;
+    if (n < 0) {
+        n = k-1;
+    }
+    return n;
+}
+const addNum = (n, k = (quantity.value > 0 && quantity.value <= 2 ? quantity.value : 4)) => {
+    return n = (n+1) % (k);
+}
 const rotateWheel = (isToNext = true) => {
     if (isToNext) {
-        currentLetter.value -= 1;
-        if (currentLetter.value < 0) {
-            currentLetter.value = 3;
-        }
-        lowestLetter.value = (lowestLetter.value+1)%4;
+        // currentLetter.value -= 1;
+        // if (currentLetter.value < 0) {
+        //     currentLetter.value = 3;
+        // }
+        router.push(`/received/${addNum(parseInt(route.params.id), quantity.value)}`);
+        currentLetter.value = addNum(currentLetter.value);
+        lowestLetterNum.value = addNum(startElements.value[currentLetter.value], quantity.value);
+        startElements.value.splice(lowestLetter.value, 1, lowestLetterNum.value);
+        console.log(startElements.value);
+        lowestLetter.value = addNum(lowestLetter.value);
         rotation.value -= temp;
         rotation.value += -90;
     } else {
-        currentLetter.value = (currentLetter.value+1)%4
-        lowestLetter.value -= 1;
-        if (lowestLetter.value < 0) {
-            lowestLetter.value = 3;
+        router.push(`/received/${subtractNum(parseInt(route.params.id), quantity.value)}`);
+        currentLetter.value = subtractNum(currentLetter.value);
+        lowestLetterNum.value = subtractNum(startElements.value[currentLetter.value], quantity.value);
+        startElements.value.splice(lowestLetter.value, 1, lowestLetterNum.value);
+        lowestLetter.value = subtractNum(lowestLetter.value);
+        console.log(startElements.value);
+        if (lowestLetterNum.value < 0) {
+            lowestLetterNum.value = quantity.value-1;
         }
         rotation.value -= temp;
         rotation.value += 90;
@@ -117,6 +168,10 @@ const mouseUp = (event) => {
         temp = 0;
     }
 };
+
+// const changeNum = (n) => computed(() => {
+//     return lowestLetter.value+1 != n ? startElements[n - 1] + 1 : lowestLetterNum.value+1;
+// })
 </script>
 
 <template>
@@ -137,28 +192,12 @@ const mouseUp = (event) => {
                     </div>
                 </div>
                 <div class="letter-number_box">
-                    {{ n }}
+<!--                    {{ lowestLetter.value+1 != n ? startElements[n - 1] + 1 : changeNum(n) }}-->
+                    {{ startElements[n - 1] + 1 }}
                 </div>
             </div>
 <!--            <div class="letter_container" data-index="2">-->
         </div>
-<!--            <div class="wheel-navigation_container">-->
-<!--                <div class="arrow-btn_box to-left" @click="rotateWheel(false)">-->
-<!--                    <img src="@/assets/arrow-left.svg" alt="<">-->
-<!--                </div>-->
-<!--                <div class="arrow-btn_box to-right" @click="rotateWheel">-->
-<!--                    <img src="@/assets/arrow-right.svg" alt=">">-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--                <img src="@/assets/heart.svg" alt="">-->
-<!--            </div>-->
-<!--            <div class="letter_container" data-index="3">-->
-<!--                <img src="@/assets/heart.svg" alt="">-->
-<!--            </div>-->
-<!--            <div class="letter_container" data-index="4">-->
-<!--                <img src="@/assets/heart.svg" alt="">-->
-<!--            </div>-->
     </div>
 </template>
 
@@ -294,7 +333,7 @@ const mouseUp = (event) => {
         //}
 
         .wheel_wrapper {
-            transition: none;
+            //transition: none;
         }
 
         .letter_container {

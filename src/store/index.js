@@ -13,10 +13,10 @@ export default new createStore({
     },
     actions: {
         async fetchReceived({ commit }) {
-            let response = await fetch('./data.json');
+            const response = await fetch('./data.json');
             if (response.ok) {
                 const data = await response.json();
-                commit('setReceived', data.cards);
+                await commit('setReceived', data.cards);
             }
         }
     },
