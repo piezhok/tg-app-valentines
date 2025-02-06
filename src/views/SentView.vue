@@ -1,5 +1,5 @@
 <script setup>
-    import {onMounted} from "vue";
+    import {onMounted, ref} from "vue";
 
     async function getSmth() {
         const smth = await fetch("http://45.82.253.8:5000/api/cards/sent/", {
@@ -17,7 +17,7 @@
     const test = ref();
     onMounted(() => {
         test.value = getSmth();
-        console.log(test);
+        console.log(test.value);
     })
 </script>
 
