@@ -13,14 +13,23 @@ const addAt = (event) => {
 const initData = ref();
 const userInfo = ref();
 const senderId = ref();
+
+const formData = ref({
+    telegram_init_data: 0,
+    sender_telegram_id: 0,
+    receiver_telegram_id: 488687700,
+    message: "",
+    created_at: 0,
+    anonymous: true
+});
 onMounted(() => {
     initData.value = window.Telegram.WebApp.initData;
     let decodedTemp = decodeURIComponent(initData.value).replace("user=", "").split("&")[0];
     console.log(decodedTemp);
     userInfo.value = JSON.parse(decodedTemp);
-    senderId.value = initData.value.id;
-    console.log(userInfo.value);
-    console.log(senderId.value);
+    senderId.value = userInfo.value.id;
+    formData.value.telegram_init_data = initData.value;
+    formData.value.sender_telegram_id = senderId.value;
 })
 
 const removeAt = (event) => {
@@ -31,14 +40,10 @@ const removeAt = (event) => {
     }
 }
 
-const formData = ref({
-    telegram_init_data: initData.value,
-    sender_telegram_id: 0,
-    receiver_telegram_id: 0,
-    message: "",
-    created_at: 0,
-    anonymous: true
-});
+
+const submitForm = () => {
+
+}
 </script>
 
 <template>
@@ -51,10 +56,10 @@ const formData = ref({
             </div>
             <div class="input-box to">
                 <label for="to-input">Кому</label>
-                <input type="text" id="to-input" placeholder="@username" autocorrect="off" autocapitalize="off" spellcheck="false" @focus="addAt" @input="addAt" @blur="removeAt" />
+                <input type="text" id="to-input" required placeholder="@username" autocorrect="off" autocapitalize="off" spellcheck="false" @focus="addAt" @input="addAt" @blur="removeAt"/>
             </div>
         </div>
-        <textarea wrap="hard" class="message-box"></textarea>
+        <textarea v-model="formData.message" wrap="hard" class="message-box" required></textarea>
         <div class="control-container">
             <div class="anon-radio_container">
                 <div class="anon-radio">
@@ -72,8 +77,7 @@ const formData = ref({
             </div>
         </div>
         <div class="btn-container">
-            <input type="button" id="send-btn">
-            <label for="send-btn">Отправить</label>
+<!--            <label for="send-btn">Отправить</label>-->
         </div>
     </form>
 </template>
