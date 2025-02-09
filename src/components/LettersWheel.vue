@@ -73,7 +73,7 @@ onMounted(() => {
 //     currentLetter.value = parseInt(to.path)-1;
 //     console.log(currentLetter.value);
 // });
-const subtractNum = (n, k = (quantity.value > 0 && quantity.value <= 2 ? quantity.value : 4), isNatural = false) => {
+const subtractNum = (n, k = (quantity.value > 0 && quantity.value < 2 ? quantity.value : 4), isNatural = false) => {
     n -= 1;
     if (!isNatural) {
         if (n < 0) {
@@ -86,7 +86,7 @@ const subtractNum = (n, k = (quantity.value > 0 && quantity.value <= 2 ? quantit
     }
     return n;
 }
-const addNum = (n, k = (quantity.value > 0 && quantity.value <= 2 ? quantity.value : 4), isNatural = false) => {
+const addNum = (n, k = 4, isNatural = false) => {
     n = (n+1) % k;
     if (isNatural && n === 0) {
         n = k;
@@ -143,20 +143,20 @@ const moveIt = (diff) => {
 }
 
 const touchStart = (event) => {
-    if (route.params.id == undefined) return;
+    if (route.params.id == undefined || quantity.value === 1) return;
     touchStartX = event.touches[0].clientX;
     isDragging.value = true;
 };
 const touchMove = (event) => {
     // let diffX = event.touches[0].clientX - touchStartX;
-    if (route.params.id == undefined) return;
+    if (route.params.id == undefined || quantity.value === 1) return;
     if (!isDragging.value) return;
     let diffX = event.touches[0].clientX - touchStartX;
     moveIt(diffX);
 };
 requestAnimationFrame(touchMove);
 const touchEnd = (event) => {
-    if (route.params.id == undefined) return;
+    if (route.params.id == undefined || quantity.value === 1) return;
     isDragging.value = false;
     const touchEndX = event.changedTouches[0].clientX;
     const diffX = touchEndX - touchStartX;
@@ -172,19 +172,19 @@ const touchEnd = (event) => {
 };
 
 const mouseDown = (event) => {
-    if (route.params.id == undefined) return;
+    if (route.params.id == undefined || quantity.value === 1) return;
     mouseStartX = event.clientX;
     isDragging.value = true;
 };
 const mouseMove = (event) => {
-    if (route.params.id == undefined) return;
+    if (route.params.id == undefined || quantity.value === 1) return;
     if (!isDragging.value) return;
     let diffX = event.clientX - mouseStartX;
     moveIt(diffX);
 }
 requestAnimationFrame(mouseMove);
 const mouseUp = (event) => {
-    if (route.params.id == undefined) return;
+    if (route.params.id == undefined || quantity.value === 1) return;
     if (!isDragging.value) return;
     isDragging.value = false;
     const diffX = event.clientX - mouseStartX;
@@ -204,7 +204,7 @@ const mouseUp = (event) => {
 </script>
 
 <template>
-    <div class="wheel_container" :class="{mini: $route.path == '/received', new: $route.path == '/new'}">
+    <div class="wheel_container" :class="{mini: $route.path == '/received', new: $route.path == '/new', single: quantity === 1}">
         <div class="wheel_wrapper" :style="{transform: `rotate(${rotation}deg)`}"
              @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd"
              @touchcancel="touchEnd"
@@ -390,6 +390,14 @@ const mouseUp = (event) => {
     .new {
         transform: translateY(22rem) scale(120%);
         pointer-events: none;
+        .wheel_wrapper {
+            .letter_container:not(:nth-child(1)) {
+                opacity: 0 !important;
+            }
+        }
+    }
+
+    .single {
         .wheel_wrapper {
             .letter_container:not(:nth-child(1)) {
                 opacity: 0 !important;

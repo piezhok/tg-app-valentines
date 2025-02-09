@@ -25,7 +25,11 @@ onMounted(() => {
     console.log(initData.value);
 
     try {
-        const response = axios.post('https://saharvnor.me:5000/api/cards', userData.value);
+        const response = axios.post('https://saharvnor.me:5000/api/cards', userData.value, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
         console.log(response);
     } catch (error) {
         console.error('Error submitting form', error);
