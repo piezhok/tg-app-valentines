@@ -6,7 +6,9 @@ import {computed, onMounted, ref} from "vue";
 
 const store = useStore();
 
-const initData = store.commit("setInitData");
+const initData = computed(() => {
+    return store.commit("setInitData");
+})
 console.log(initData);
 const userInfo = computed(() => {
     return store.getters.userInfo();
