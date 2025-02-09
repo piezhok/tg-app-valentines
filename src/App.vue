@@ -9,11 +9,11 @@ const store = useStore();
 const initData = computed(() => {
     return store.commit("setInitData");
 })
-console.log(initData);
+console.log(initData.value);
 const userInfo = computed(() => {
     return store.getters.userInfo();
 })
-console.log(userInfo);
+console.log(userInfo.value);
 const passPhrase = ref()
 onMounted(() => {
     // initData.value = window.Telegram.WebApp.initData;
