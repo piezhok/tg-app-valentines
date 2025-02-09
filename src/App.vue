@@ -18,7 +18,7 @@ const userInfo = computed(() => {
 onMounted(() => {
     const userData = ref({
         telegram_id: userInfo.value.id,
-        telegram_init_data: initData.value.json(),
+        telegram_init_data: window.Telegram.WebApp.initData,
         public_key: "string"
     })
     console.log(userData.value.json());
