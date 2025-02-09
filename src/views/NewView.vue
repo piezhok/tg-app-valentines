@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios';
 import {onMounted, ref} from "vue";
+import {useRoute} from "vue-router";
 const addAt = (event) => {
     const input = event.target;
     const fixedText = "@";
@@ -10,6 +11,7 @@ const addAt = (event) => {
     }
 }
 
+const route = useRoute();
 const initData = ref();
 const userInfo = ref();
 const senderId = ref();
@@ -43,7 +45,8 @@ const removeAt = (event) => {
 async function submitForm() {
     try {
         const response = await axios.post('https://example.com/api/submit', formData.value);
-        return response;
+        console.log('Form submitted successfully', response);
+        route.path = "/sent"
     } catch (error) {
         console.error('Error submitting form', error);
     }
