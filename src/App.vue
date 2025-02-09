@@ -21,7 +21,7 @@ onMounted(() => {
         telegram_init_data: initData.value,
         public_key: "string"
     })
-    console.log(userData.value);
+    console.log(userData.value.json());
     console.log(initData.value);
 
     try {
