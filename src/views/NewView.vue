@@ -14,7 +14,7 @@ const initData = ref();
 const senderId = ref();
 onMounted(() => {
     const temp = window.Telegram.WebApp.initData;
-    let decodedTemp = decodeURIComponent(temp);
+    let decodedTemp = decodeURIComponent(temp).replace("user=", "");
     console.log(decodedTemp);
     initData.value = JSON.parse(decodedTemp);
     senderId.value = initData.value.id;
