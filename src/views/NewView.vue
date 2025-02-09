@@ -1,7 +1,8 @@
 <script setup>
 import axios from 'axios';
-import {ref} from "vue";
+import {computed, onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
+import {useStore} from "vuex";
 const addAt = (event) => {
     const input = event.target;
     const fixedText = "@";
@@ -12,6 +13,13 @@ const addAt = (event) => {
 }
 
 const router = useRouter();
+const store = useStore()
+const initData = computed(() => {
+    return store.state.initData;
+})
+const userInfo = computed(() => {
+    return store.getters.userInfo;
+})
 // const initData = ref();
 // const userInfo = ref();
 // const senderId = ref();
@@ -24,15 +32,10 @@ const formData = ref({
     created_at: 0,
     anonymous: true
 });
-// onMounted(() => {
-//     initData.value = window.Telegram.WebApp.initData;
-//     let decodedTemp = decodeURIComponent(initData.value).replace("user=", "").split("&")[0];
-//     console.log(decodedTemp);
-//     userInfo.value = JSON.parse(decodedTemp);
-//     senderId.value = userInfo.value.id;
-//     formData.value.telegram_init_data = initData.value;
-//     formData.value.sender_telegram_id = senderId.value;
-// })
+onMounted(() => {
+    formData.value.telegram_init_data = initData.value;
+    formData.value.sender_telegram_id = userInfo.value.id;
+})
 
 const removeAt = (event) => {
     const input = event.target;
@@ -44,7 +47,7 @@ const removeAt = (event) => {
 
 async function submitForm() {
     try {
-        const response = await axios.post('http://45.82.253.8:5000/api/cards', formData.value);
+        const response = await axios.post('https://saharvnor.me:5000/api/cards', formData.value);
         console.log('Form submitted successfully', response);
         router.to = "/sent";
     } catch (error) {

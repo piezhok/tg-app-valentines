@@ -4,7 +4,7 @@ export default new createStore({
     state: {
         received: [],
         sent: [],
-        initData: ""
+        initData: window.Telegram.WebApp.initData
     },
     getters: {
         userInfo (state) {
