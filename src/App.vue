@@ -27,7 +27,8 @@ onMounted(() => {
     try {
         const response = axios.post('https://saharvnor.me:5000/api/cards', userData.value, {
             headers: {
-                'Content-Type': 'application/json'
+                "Content-Type": "application/json",
+                "accept": "application/json"
             }
         });
         console.log(response);
