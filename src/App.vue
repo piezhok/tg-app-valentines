@@ -11,7 +11,7 @@ const initData = computed(() => {
 })
 console.log(initData.value);
 const userInfo = computed(() => {
-    return store.getters.userInfo();
+    return store.getters.userInfo;
 })
 console.log(userInfo.value);
 const passPhrase = ref()
