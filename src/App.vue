@@ -4,8 +4,14 @@ import LettersWheel from "@/components/LettersWheel.vue";
 import {useStore} from "vuex";
 import {computed, onMounted, ref} from "vue";
 
-const initData = window.Telegram.WebApp.initData;
-console.log("это "+initData);
+const store = useStore();
+
+const initData = store.commit("setInitData");
+console.log(initData);
+const userInfo = computed(() => {
+    return store.getters.userInfo();
+})
+console.log(userInfo);
 const passPhrase = ref()
 onMounted(() => {
     // initData.value = window.Telegram.WebApp.initData;
@@ -16,7 +22,6 @@ onMounted(() => {
     // console.log(passPhrase.value);
 })
 
-const store = useStore();
 // onBeforeMount(() => {
 //     store.dispatch("fetchReceived");
 // })

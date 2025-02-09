@@ -19,8 +19,8 @@ export default new createStore({
         setSent(state, value) {
             state.sent = value;
         },
-        setInitData(state, value) {
-            state.initData = value;
+        setInitData(state) {
+            state.initData = window.Telegram.WebApp.initData;
         }
     },
     actions: {
@@ -38,10 +38,10 @@ export default new createStore({
                 await commit('setSent', data.cards);
             }
         },
-        async fetchInitData({ commit }) {
-            const initData = await window.Telegram.WebApp.initData
-            await commit('setInitData', initData);
-        }
+        // async fetchInitData({ commit }) {
+        //     const initData = await window.Telegram.WebApp.initData
+        //     await commit('setInitData', initData);
+        // }
     },
     modules: {
     }
