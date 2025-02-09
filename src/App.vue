@@ -21,7 +21,7 @@ onMounted(() => {
         telegram_init_data: window.Telegram.WebApp.initData,
         public_key: "string"
     })
-    console.log(userData.value.json());
+    console.log(userData.value);
     console.log(initData.value);
 
     try {
