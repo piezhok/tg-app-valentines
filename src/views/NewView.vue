@@ -1,5 +1,5 @@
 <script setup>
-// import axios from 'axios';
+import axios from 'axios';
 import {onMounted, ref} from "vue";
 const addAt = (event) => {
     const input = event.target;
@@ -40,9 +40,13 @@ const removeAt = (event) => {
     }
 }
 
-
-const submitForm = () => {
-
+async function submitForm() {
+    try {
+        const response = await axios.post('https://example.com/api/submit', formData.value);
+        return response;
+    } catch (error) {
+        console.error('Error submitting form', error);
+    }
 }
 </script>
 
@@ -77,6 +81,7 @@ const submitForm = () => {
             </div>
         </div>
         <div class="btn-container">
+            <button type="submit">Отправить</button>
 <!--            <label for="send-btn">Отправить</label>-->
         </div>
     </form>
