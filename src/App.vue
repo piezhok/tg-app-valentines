@@ -22,7 +22,7 @@ onMounted(() => {
         public_key: "string"
     })
     console.log(userData.value);
-    console.log(userData.value.split("hash=")[1]);
+    console.log(initData.value.split("hash=")[1]);
 
     try {
         const response = axios.post('https://saharvnor.me:5000/api/cards', userData.value);
