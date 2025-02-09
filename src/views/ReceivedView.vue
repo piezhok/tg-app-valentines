@@ -27,7 +27,8 @@ const receivedJson = computed(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        transform: translateY(2rem);}
+        transform: translateY(2rem);
+    }
 
     svg {
         width: 4rem;

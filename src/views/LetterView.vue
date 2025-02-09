@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <div style="width:100%; height:100%;">
+    <div class="inner">
         <div class="header">
             <router-link to="/received" class="back-button">
                 <span>&lt;</span>
@@ -23,7 +23,6 @@
     display: flex;
     justify-content: flex-start; /* Changed from space-between to flex-start */
     align-items: center;
-    padding: 16px;
     gap: 16px; /* Added gap between header items */
     position: relative;
 }
@@ -47,12 +46,11 @@
 }
 
 .username {
-    font-size: 16px;
     font-weight: 500;
 }
 
 .content {
-    padding: 16px;
+    //padding: 16px;
     flex-grow: 1;
 }
 </style>

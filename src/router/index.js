@@ -41,7 +41,7 @@ router.afterEach((to, from) => {
         if (toId < fromId) {
             to.meta.transition = 'slide-right';
 
-        } else if (toId > toId) {
+        } else if (toId > fromId) {
             to.meta.transition = 'slide-left';
         }
     } else {

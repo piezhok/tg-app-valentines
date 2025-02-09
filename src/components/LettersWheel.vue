@@ -43,13 +43,21 @@ watch(() => route.fullPath, (toPath, fromPath) => {
             startElements.value = [];
             for (let i = 0; i < 4; i++) {
                 if (i === 3) {
+                    // startElements.value.push((idIndex+1) % quantity.value);
                     if (idIndex-1 <= 0)
                         startElements.value.push(quantity.value-1);
                     else
                         startElements.value.push((idIndex-1) % quantity.value)
                 } else
+                    // if (idIndex-i < 0) {
+                    //     startElements.value.push(quantity.value-i);
+                    //     console.log(quantity.value);
+                    // }
+                    // else
+                    //     startElements.value.push((idIndex-i) % quantity.value)
                     startElements.value.push((idIndex+i) % quantity.value);
             }
+            console.log(startElements.value);
             lowestLetterNum.value = startElements.value[2];
         }
         // const idIndex = json.value.indexOf(id);
@@ -65,21 +73,25 @@ onMounted(() => {
 //     currentLetter.value = parseInt(to.path)-1;
 //     console.log(currentLetter.value);
 // });
-const subtractNum = (n, k = (quantity.value > 0 && quantity.value <= 2 ? quantity.value : 4), isEqualZero = false) => {
+const subtractNum = (n, k = (quantity.value > 0 && quantity.value <= 2 ? quantity.value : 4), isNatural = false) => {
     n -= 1;
-    if (!isEqualZero) {
+    if (!isNatural) {
         if (n < 0) {
             n = k-1;
         }
     } else {
         if (n <= 0) {
-            n = k-1;
+            n = k;
         }
     }
     return n;
 }
-const addNum = (n, k = (quantity.value > 0 && quantity.value <= 2 ? quantity.value : 4)) => {
-    return n = (n+1) % (k);
+const addNum = (n, k = (quantity.value > 0 && quantity.value <= 2 ? quantity.value : 4), isNatural = false) => {
+    n = (n+1) % k;
+    if (isNatural && n === 0) {
+        n = k;
+    }
+    return n;
 }
 const rotateWheel = (isToNext = true) => {
     if (isToNext) {
@@ -89,22 +101,26 @@ const rotateWheel = (isToNext = true) => {
         // }
         router.push(`/received/${addNum(parseInt(route.params.id), quantity.value, true)}`);
         currentLetter.value = addNum(currentLetter.value);
+        // currentLetter.value = subtractNum(currentLetter.value);
         lowestLetterNum.value = addNum(startElements.value[currentLetter.value], quantity.value);
         startElements.value.splice(lowestLetter.value, 1, lowestLetterNum.value);
         console.log(startElements.value);
         lowestLetter.value = addNum(lowestLetter.value);
+        // lowestLetter.value = subtractNum(lowestLetter.value);
         rotation.value -= temp;
         rotation.value += -90;
     } else {
         router.push(`/received/${subtractNum(parseInt(route.params.id), quantity.value, true)}`);
         currentLetter.value = subtractNum(currentLetter.value);
+        // currentLetter.value = addNum(currentLetter.value);
         lowestLetterNum.value = subtractNum(startElements.value[currentLetter.value], quantity.value);
         startElements.value.splice(lowestLetter.value, 1, lowestLetterNum.value);
         lowestLetter.value = subtractNum(lowestLetter.value);
+        // lowestLetter.value = addNum(lowestLetter.value);
         console.log(startElements.value);
-        if (lowestLetterNum.value < 0) {
-            lowestLetterNum.value = quantity.value-1;
-        }
+        // if (lowestLetterNum.value < 0) {
+        //     lowestLetterNum.value = quantity.value-1;
+        // }
         rotation.value -= temp;
         rotation.value += 90;
     }
@@ -127,16 +143,20 @@ const moveIt = (diff) => {
 }
 
 const touchStart = (event) => {
+    if (route.params.id == undefined) return;
     touchStartX = event.touches[0].clientX;
     isDragging.value = true;
 };
 const touchMove = (event) => {
     // let diffX = event.touches[0].clientX - touchStartX;
+    if (route.params.id == undefined) return;
     if (!isDragging.value) return;
     let diffX = event.touches[0].clientX - touchStartX;
     moveIt(diffX);
 };
+requestAnimationFrame(touchMove);
 const touchEnd = (event) => {
+    if (route.params.id == undefined) return;
     isDragging.value = false;
     const touchEndX = event.changedTouches[0].clientX;
     const diffX = touchEndX - touchStartX;
@@ -152,16 +172,19 @@ const touchEnd = (event) => {
 };
 
 const mouseDown = (event) => {
+    if (route.params.id == undefined) return;
     mouseStartX = event.clientX;
     isDragging.value = true;
 };
 const mouseMove = (event) => {
+    if (route.params.id == undefined) return;
     if (!isDragging.value) return;
     let diffX = event.clientX - mouseStartX;
     moveIt(diffX);
 }
 requestAnimationFrame(mouseMove);
 const mouseUp = (event) => {
+    if (route.params.id == undefined) return;
     if (!isDragging.value) return;
     isDragging.value = false;
     const diffX = event.clientX - mouseStartX;
@@ -181,7 +204,7 @@ const mouseUp = (event) => {
 </script>
 
 <template>
-    <div class="wheel_container" :class="{mini: $route.path == '/received'}">
+    <div class="wheel_container" :class="{mini: $route.path == '/received', new: $route.path == '/new'}">
         <div class="wheel_wrapper" :style="{transform: `rotate(${rotation}deg)`}"
              @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd"
              @touchcancel="touchEnd"
@@ -347,22 +370,30 @@ const mouseUp = (event) => {
         //.wheel_wrapper {
             //transform: rotate(0deg);
         //}
-        .wheel_wrapper {
-            //transition: none;
-            //.letter_container:not(:nth-child(1)) {
-            //    opacity: 0 !important;
-            //}
-        }
+        //.wheel_wrapper {
+        //    transition: none;
+        //    .letter_container:not(:nth-child(1)) {
+        //        opacity: 0 !important;
+        //    }
+        //}
 
         .letter_container {
             :not(img) {
                 opacity: 0;
             }
         }
-
-
         //.letter_container :not(:nth-child(1)) {
         //    opacity: 0;
         //}
+    }
+
+    .new {
+        transform: translateY(22rem) scale(120%);
+        pointer-events: none;
+        .wheel_wrapper {
+            .letter_container:not(:nth-child(1)) {
+                opacity: 0 !important;
+            }
+        }
     }
 </style>
