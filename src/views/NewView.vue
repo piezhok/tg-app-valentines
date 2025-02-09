@@ -11,14 +11,15 @@ const addAt = (event) => {
 }
 
 const initData = ref();
+const userInfo = ref();
 const senderId = ref();
 onMounted(() => {
-    const temp = window.Telegram.WebApp.initData;
-    let decodedTemp = decodeURIComponent(temp).replace("user=", "");
+    initData.value = window.Telegram.WebApp.initData;
+    let decodedTemp = decodeURIComponent(initData.value).replace("user=", "").split("&")[0];
     console.log(decodedTemp);
-    initData.value = JSON.parse(decodedTemp);
+    userInfo.value = JSON.parse(decodedTemp);
     senderId.value = initData.value.id;
-    console.log(initData.value);
+    console.log(userInfo.value);
     console.log(senderId.value);
 })
 
