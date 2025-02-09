@@ -21,6 +21,7 @@ onMounted(() => {
         telegram_init_data: initData.value,
         public_key: "string"
     })
+    console.log(userData);
     try {
         const response = axios.post('https://saharvnor.me:5000/api/cards', userData.value);
         console.log(response);
