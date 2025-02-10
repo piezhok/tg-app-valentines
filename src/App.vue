@@ -32,8 +32,7 @@ const postUser = async () => {
             withCredentials: false,
             headers: {
                 "Content-Type": "application/json",
-                "accept": "application/json",
-                "User-Agent": "Mozilla/5.0 (platform; rv:gecko-version) Gecko/gecko-trail Firefox/firefox-version",
+                "accept": "application/json"
             }
         });
         console.log("response", response);
@@ -41,11 +40,11 @@ const postUser = async () => {
         console.error('Error submitting form', error);
     }
 }
+const post = await postUser();
+console.log(post);
 
 // const passPhrase = ref()
 onMounted(async () => {
-    const post = await postUser();
-    console.log(post);
     // const userData = ref({
     //     telegram_id: userInfo.value.id,
     //     telegram_init_data: initData.value,
