@@ -14,9 +14,9 @@ const store = useStore();
 //     return store.getters.userInfo;
 // })
 
-const initData = window.Telegram.WebApp.initData;
+const initData = String(window.Telegram.WebApp.initData);
 console.log("initData", initData);
-const userInfo = JSON.parse(decodeURIComponent(window.Telegram.WebApp.initData).replace("user=", "").split("&")[0]);
+const userInfo = JSON.parse(decodeURIComponent(String(window.Telegram.WebApp.initData)).replace("user=", "").split("&")[0]);
 
 const postUser = async () => {
     try {
