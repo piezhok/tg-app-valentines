@@ -30,7 +30,8 @@ onMounted(() => {
                 "Content-Type": "application/json",
                 "accept": "application/json",
                 "User-Agent": "Mozilla/5.0 (platform; rv:gecko-version) Gecko/gecko-trail Firefox/firefox-version",
-            }
+            },
+            mode: 'no-cors',
         });
         console.log(response);
     } catch (error) {
