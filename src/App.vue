@@ -3,7 +3,7 @@ import NavBar from "@/components/NavBar.vue";
 import LettersWheel from "@/components/LettersWheel.vue";
 import {useStore} from "vuex";
 import {computed, onMounted, ref} from "vue";
-// import axios from 'axios';
+import axios from 'axios';
 
 const store = useStore();
 
@@ -15,7 +15,7 @@ const userInfo = computed(() => {
 })
 
 // const passPhrase = ref()
-onMounted(() => {
+onMounted(async () => {
     const userData = ref({
         telegram_id: userInfo.value.id,
         telegram_init_data: initData.value,
@@ -25,27 +25,14 @@ onMounted(() => {
     console.log(initData.value);
 
     try {
-        const response = fetch("https://saharvnor.me:5000/api/users/", {
-            method: "POST",
+        const response = await axios.post('https://saharvnor.me:5000/api/users/', userData.value, {
             mode: 'no-cors',
             headers: {
                 "Content-Type": "application/json",
                 "accept": "application/json",
-            },
-            body: {
-                "telegram_id": userData.value.telegram_id,
-                "telegram_init_data": userData.value.telegram_init_data,
-                "public_key": "string"
-            },
-        })
-        // const response = axios.post('https://saharvnor.me:5000/api/users/', userData.value, {
-        //     mode: 'no-cors',
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "accept": "application/json",
-        //         "User-Agent": "Mozilla/5.0 (platform; rv:gecko-version) Gecko/gecko-trail Firefox/firefox-version",
-        //     }
-        // });
+                "User-Agent": "Mozilla/5.0 (platform; rv:gecko-version) Gecko/gecko-trail Firefox/firefox-version",
+            }
+        });
         console.log(response);
     } catch (error) {
         console.error('Error submitting form', error);
