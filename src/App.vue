@@ -38,11 +38,11 @@ const postUser = async () => {
         console.error('Error submitting form', error);
     }
 }
-const post = postUser();
-console.log(post);
 
 // const passPhrase = ref()
 onMounted(async () => {
+    const post = await postUser();
+    console.log(post);
     // const userData = ref({
     //     telegram_id: userInfo.value.id,
     //     telegram_init_data: initData.value,
