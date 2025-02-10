@@ -7,16 +7,17 @@ import axios from 'axios';
 
 const store = useStore();
 
-const initData = computed(() => {
-    return store.state.initData;
-})
-const userInfo = computed(() => {
-    return store.getters.userInfo;
-})
-console.log(userInfo.value.split("id:")[1].split(",")[0]);
+const initData = window.Telegram.WebApp.initData;
+const userInfo = JSON.parse(decodeURIComponent(initData).replace("user=", "").split("&")[0]);
+// const initData = computed(() => {
+//     return store.state.initData;
+// })
+// const userInfo = computed(() => {
+//     return store.getters.userInfo;
+// })
 const userData = ref({
-    "telegram_id": userInfo.value,
-    "telegram_init_data": initData.value,
+    "telegram_id": userInfo.id,
+    "telegram_init_data": initData,
     "public_key": "string"
 })
 
@@ -36,13 +37,12 @@ async function postUser() {
 }
 if (window.Telegram.WebApp.CloudStorage.getItem("id") == undefined) {
     await postUser()
-    window.Telegram.WebApp.CloudStorage.setItem("id", userInfo.value.id);
+    window.Telegram.WebApp.CloudStorage.setItem("id", userInfo.id);
 }
 
 // const passPhrase = ref()
 onMounted(() => {
     // console.log(userData.value);
-    console.log(initData.value);
     // postUser();
 
     // initData.value = window.Telegram.WebApp.initData;

@@ -8,7 +8,8 @@ export default new createStore({
     },
     getters: {
         userInfo: (state) => {
-            return JSON.parse(decodeURIComponent(state.initData).replace("user=", "").split("&")[0]);
+            return decodeURIComponent(state.initData).replace("user=", "").split("&")[0];
+            // return state.initData+"111"
         }
     },
     mutations: {
