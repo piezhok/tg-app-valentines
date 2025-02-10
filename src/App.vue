@@ -14,18 +14,9 @@ const userInfo = computed(() => {
     return store.getters.userInfo;
 })
 
-// const passPhrase = ref()
-onMounted(async () => {
-    const userData = ref({
-        telegram_id: userInfo.value.id,
-        telegram_init_data: initData.value,
-        public_key: "string"
-    })
-    // console.log(userData.value);
-    console.log(initData.value);
-
+const postUser = async (data) => {
     try {
-        const response = await axios.post('https://saharvnor.me:5000/api/users/', userData.value, {
+        const response = await axios.post('https://saharvnor.me:5000/api/users/', data, {
             mode: 'no-cors',
             headers: {
                 "Content-Type": "application/json",
@@ -37,6 +28,19 @@ onMounted(async () => {
     } catch (error) {
         console.error('Error submitting form', error);
     }
+}
+
+// const passPhrase = ref()
+onMounted(async () => {
+    const userData = ref({
+        telegram_id: userInfo.value.id,
+        telegram_init_data: initData.value,
+        public_key: "string"
+    })
+    postUser(userData.value);
+    // console.log(userData.value);
+
+
 
     // initData.value = window.Telegram.WebApp.initData;
     // console.log(window.Telegram.WebApp.initData)
