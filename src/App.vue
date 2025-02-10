@@ -23,7 +23,7 @@ const userInfo = tempUserInfo;
 const postUser = async () => {
     try {
         const response = await axios.post('https://saharvnor.me:5000/api/users/', {
-            "telegram_id": userInfo.id,
+            "telegram_id": 34,
             "telegram_init_data": initData,
             "public_key": "string"
         }, {
