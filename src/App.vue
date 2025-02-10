@@ -15,10 +15,10 @@ const store = useStore();
 // })
 
 const tempInit = JSON.stringify(window.Telegram.WebApp.initData);
-const initData = structuredClone(tempInit);
+const initData = tempInit;
 console.log("initData", initData);
 const tempUserInfo = JSON.parse(decodeURIComponent(window.Telegram.WebApp.initData).replace("user=", "").split("&")[0]);
-const userInfo = structuredClone(tempUserInfo);
+const userInfo = tempUserInfo;
 
 const postUser = async () => {
     try {
