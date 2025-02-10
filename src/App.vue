@@ -25,13 +25,14 @@ onMounted(() => {
     console.log(initData.value);
 
     try {
-        const response = axios.post('https://saharvnor.me:5000/api/cards', JSON.stringify(userData.value), {
+        // const response = fetch("https://saharvnor.me:5000/api/cards")
+        const response = axios.post('https://saharvnor.me:5000/api/users', userData.value, {
+            mode: 'no-cors',
             headers: {
                 "Content-Type": "application/json",
                 "accept": "application/json",
                 "User-Agent": "Mozilla/5.0 (platform; rv:gecko-version) Gecko/gecko-trail Firefox/firefox-version",
-            },
-            mode: 'no-cors',
+            }
         });
         console.log(response);
     } catch (error) {
