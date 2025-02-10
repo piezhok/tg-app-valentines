@@ -14,11 +14,15 @@ const store = useStore();
 //     return store.getters.userInfo;
 // })
 
+const initData = window.Telegram.WebApp.initData;
+console.log("initData", initData);
+const userInfo = JSON.parse(decodeURIComponent(window.Telegram.WebApp.initData).replace("user=", "").split("&")[0]);
+
 const postUser = async () => {
     try {
         const response = await axios.post('https://saharvnor.me:5000/api/users/', {
-            "telegram_id": JSON.parse(decodeURIComponent(window.Telegram.WebApp.initData).replace("user=", "").split("&")[0]),
-            "telegram_init_data": window.Telegram.WebApp.initData,
+            "telegram_id": userInfo.id,
+            "telegram_init_data": initData,
             "public_key": "string"
         }, {
             mode: 'no-cors',
@@ -34,7 +38,7 @@ const postUser = async () => {
         console.error('Error submitting form', error);
     }
 }
-const post = await postUser();
+const post = postUser();
 console.log(post);
 
 // const passPhrase = ref()
