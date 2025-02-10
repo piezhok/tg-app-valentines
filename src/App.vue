@@ -17,9 +17,9 @@ const userInfo = computed(() => {
 // const passPhrase = ref()
 onMounted(() => {
     const userData = ref({
-        "telegram_id": userInfo.value.id,
-        "telegram_init_data": initData.value,
-        "public_key": "string"
+        telegram_id: userInfo.value.id,
+        telegram_init_data: initData.value,
+        public_key: "string"
     })
     // console.log(userData.value);
     console.log(initData.value);
@@ -27,15 +27,16 @@ onMounted(() => {
     try {
         const response = fetch("https://saharvnor.me:5000/api/users/", {
             method: "POST",
+            mode: 'no-cors',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "accept": "application/json",
             },
             body: {
                 "telegram_id": userData.value.telegram_id,
                 "telegram_init_data": userData.value.telegram_init_data,
                 "public_key": "string"
             },
-            mode: 'no-cors',
         })
         // const response = axios.post('https://saharvnor.me:5000/api/users/', userData.value, {
         //     mode: 'no-cors',
