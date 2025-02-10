@@ -2,21 +2,25 @@
 import NavBar from "@/components/NavBar.vue";
 import LettersWheel from "@/components/LettersWheel.vue";
 import {useStore} from "vuex";
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted} from "vue";
 import axios from 'axios';
 
 const store = useStore();
 
-const initData = computed(() => {
-    return store.state.initData;
-})
-const userInfo = computed(() => {
-    return store.getters.userInfo;
-})
+// const initData = computed(() => {
+//     return store.state.initData;
+// })
+// const userInfo = computed(() => {
+//     return store.getters.userInfo;
+// })
 
-const postUser = async (data) => {
+const postUser = async () => {
     try {
-        const response = await axios.post('https://saharvnor.me:5000/api/users/', data, {
+        const response = await axios.post('https://saharvnor.me:5000/api/users/', {
+            "telegram_id": JSON.parse(decodeURIComponent(window.Telegram.WebApp.initData).replace("user=", "").split("&")[0]),
+            "telegram_init_data": window.Telegram.WebApp.initData,
+            "public_key": "string"
+        }, {
             mode: 'no-cors',
             withCredentials: false,
             headers: {
@@ -30,15 +34,16 @@ const postUser = async (data) => {
         console.error('Error submitting form', error);
     }
 }
+postUser();
 
 // const passPhrase = ref()
 onMounted(async () => {
-    const userData = ref({
-        telegram_id: userInfo.value.id,
-        telegram_init_data: initData.value,
-        public_key: "string"
-    })
-    postUser(userData.value);
+    // const userData = ref({
+    //     telegram_id: userInfo.value.id,
+    //     telegram_init_data: initData.value,
+    //     public_key: "string"
+    // })
+    // postUser(userData.value);
     // console.log(userData.value);
 
 
