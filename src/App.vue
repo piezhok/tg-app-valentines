@@ -3,7 +3,7 @@ import NavBar from "@/components/NavBar.vue";
 import LettersWheel from "@/components/LettersWheel.vue";
 import {useStore} from "vuex";
 import {computed, onMounted, ref} from "vue";
-import axios from 'axios';
+// import axios from 'axios';
 
 const store = useStore();
 
@@ -25,15 +25,22 @@ onMounted(() => {
     console.log(initData.value);
 
     try {
-        // const response = fetch("https://saharvnor.me:5000/api/cards")
-        const response = axios.post('https://saharvnor.me:5000/api/users/', userData.value, {
-            mode: 'no-cors',
+        const response = fetch("https://saharvnor.me:5000/api/users/", {
+            method: "POST",
             headers: {
-                "Content-Type": "application/json",
-                "accept": "application/json",
-                "User-Agent": "Mozilla/5.0 (platform; rv:gecko-version) Gecko/gecko-trail Firefox/firefox-version",
-            }
-        });
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userData.value),
+            mode: 'no-cors',
+        })
+        // const response = axios.post('https://saharvnor.me:5000/api/users/', userData.value, {
+        //     mode: 'no-cors',
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "accept": "application/json",
+        //         "User-Agent": "Mozilla/5.0 (platform; rv:gecko-version) Gecko/gecko-trail Firefox/firefox-version",
+        //     }
+        // });
         console.log(response);
     } catch (error) {
         console.error('Error submitting form', error);
