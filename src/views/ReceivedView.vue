@@ -11,7 +11,7 @@ const receivedJson = computed(() => {
 </script>
 
 <template>
-    <div class="inner">
+    <div class="inner list">
         <router-link v-for="n in receivedJson.length" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
                 <img src="" alt="avatar">
@@ -22,19 +22,8 @@ const receivedJson = computed(() => {
 </template>
 
 <style scoped>
-    .svg-wrapper {
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transform: translateY(2rem);
-    }
-
-    svg {
-        width: 4rem;
-    }
-    .main-card {
-        margin: 1rem;
+    .inner {
+        margin: 0 1rem !important;
     }
 
     a {
@@ -42,7 +31,10 @@ const receivedJson = computed(() => {
         display: flex;
         flex-direction: row;
         align-items: center;
+        justify-content: start;
         cursor: pointer;
+        margin: 1.5rem 0;
+        position: relative;
 
         .avatar {
             width: 4.875rem;
@@ -50,5 +42,15 @@ const receivedJson = computed(() => {
             background-color: #B1244A;
             border-radius: 100rem;
         }
+    }
+
+    a::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: .05rem;
+        background-color: var(--secondary-stroke-color);
+        position: absolute;
+        bottom: -1.5rem;
     }
 </style>

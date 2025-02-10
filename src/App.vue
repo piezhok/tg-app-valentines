@@ -25,10 +25,11 @@ onMounted(() => {
     console.log(initData.value);
 
     try {
-        const response = axios.post('https://saharvnor.me:5000/api/cards', userData.value, {
+        const response = axios.post('https://saharvnor.me:5000/api/cards', {
             headers: {
                 "Content-Type": "application/json",
-                "accept": "application/json"
+                "accept": "application/json",
+                "User-Agent": "Mozilla/5.0 (platform; rv:gecko-version) Gecko/gecko-trail Firefox/firefox-version",
             }
         });
         console.log(response);
@@ -60,7 +61,7 @@ const quantity = computed( () => {
         <div>{{ quantity }}</div>
         <div>Валентинок</div>
     </div>
-    <div class="main-card glass" :class="{list: $route.fullPath == '/received'||$route.fullPath == '/sent'}">
+    <div class="main-card glass" :class="{'list-container': $route.fullPath == '/received'||$route.fullPath == '/sent'}">
         <RouterView v-slot="{ Component }">
             <Transition :name="$route.meta.transition" mode="out-in">
                  <KeepAlive>
@@ -96,6 +97,9 @@ const quantity = computed( () => {
     font-size: .875rem;
     font-weight: 800;
     text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
     //position: absolute;
     //top: 1.375rem;
     :first-child {
@@ -106,7 +110,7 @@ const quantity = computed( () => {
     }
 }
 
-.list {
+.list-container {
     margin-bottom: 1rem;
 }
 
