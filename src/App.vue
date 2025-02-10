@@ -24,7 +24,21 @@ console.log("initData", initData);
 
 const postUser = async () => {
     try {
-        const response = await axios.post('https://saharvnor.me:5000/api/users/', {
+        // const response = await axios.post('https://saharvnor.me:5000/api/users/', {
+        //     "telegram_id": 34,
+        //     "telegram_init_data": initData,
+        //     // "telegram_init_data": str,
+        //     "public_key": "string"
+        // }, {
+        //     mode: 'no-cors',
+        //     withCredentials: false,
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         "accept": "application/json"
+        //     }
+        // });
+        const response = await fetch('https://saharvnor.me:5000/api/users/', {
+            "method": "POST",
             "telegram_id": 34,
             "telegram_init_data": initData,
             // "telegram_init_data": str,
