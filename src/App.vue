@@ -13,27 +13,15 @@ const initData = computed(() => {
 const userInfo = computed(() => {
     return store.getters.userInfo;
 })
+console.log(userInfo.value.split("id:")[1].split(",")[0]);
 const userData = ref({
-    "telegram_id": userInfo.value.id,
+    "telegram_id": userInfo.value,
     "telegram_init_data": initData.value,
     "public_key": "string"
 })
 
 async function postUser() {
     try {
-        // const response = fetch("https://saharvnor.me:5000/api/users/", {
-        //     method: "POST",
-        //     mode: 'no-cors',
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "accept": "application/json",
-        //     },
-        //     body: {
-        //         "telegram_id": userData.value.telegram_id,
-        //         "telegram_init_data": userData.value.telegram_init_data,
-        //         "public_key": "string"
-        //     },
-        // })
         const response = await axios.post('https://saharvnor.me:5000/api/users/', userData.value, {
             mode: 'no-cors',
             headers: {
