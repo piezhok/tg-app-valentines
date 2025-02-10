@@ -3,7 +3,7 @@ import NavBar from "@/components/NavBar.vue";
 import LettersWheel from "@/components/LettersWheel.vue";
 import {useStore} from "vuex";
 import {computed, onMounted, ref} from "vue";
-// import axios from 'axios';
+import axios from 'axios';
 
 const store = useStore();
 
@@ -13,43 +13,49 @@ const initData = computed(() => {
 const userInfo = computed(() => {
     return store.getters.userInfo;
 })
+const userData = ref({
+    "telegram_id": userInfo.value.id,
+    "telegram_init_data": initData.value,
+    "public_key": "string"
+})
 
-// const passPhrase = ref()
-onMounted(() => {
-    const userData = ref({
-        telegram_id: userInfo.value.id,
-        telegram_init_data: initData.value,
-        public_key: "string"
-    })
-    // console.log(userData.value);
-    console.log(initData.value);
-
+async function postUser() {
     try {
-        const response = fetch("https://saharvnor.me:5000/api/users/", {
-            method: "POST",
-            mode: 'no-cors',
-            headers: {
-                "Content-Type": "application/json",
-                "accept": "application/json",
-            },
-            body: {
-                "telegram_id": userData.value.telegram_id,
-                "telegram_init_data": userData.value.telegram_init_data,
-                "public_key": "string"
-            },
-        })
-        // const response = axios.post('https://saharvnor.me:5000/api/users/', userData.value, {
+        // const response = fetch("https://saharvnor.me:5000/api/users/", {
+        //     method: "POST",
         //     mode: 'no-cors',
         //     headers: {
         //         "Content-Type": "application/json",
         //         "accept": "application/json",
-        //         "User-Agent": "Mozilla/5.0 (platform; rv:gecko-version) Gecko/gecko-trail Firefox/firefox-version",
-        //     }
-        // });
-        console.log(response);
+        //     },
+        //     body: {
+        //         "telegram_id": userData.value.telegram_id,
+        //         "telegram_init_data": userData.value.telegram_init_data,
+        //         "public_key": "string"
+        //     },
+        // })
+        const response = await axios.post('https://saharvnor.me:5000/api/users/', userData.value, {
+            mode: 'no-cors',
+            headers: {
+                "Content-Type": "application/json",
+                "accept": "application/json",
+            }
+        });
+        console.log("Response: " + response.statusText);
     } catch (error) {
         console.error('Error submitting form', error);
     }
+}
+if (window.Telegram.WebApp.CloudStorage.getItem("id") == undefined) {
+    await postUser()
+    window.Telegram.WebApp.CloudStorage.setItem("id", userInfo.value.id);
+}
+
+// const passPhrase = ref()
+onMounted(() => {
+    // console.log(userData.value);
+    console.log(initData.value);
+    // postUser();
 
     // initData.value = window.Telegram.WebApp.initData;
     // console.log(window.Telegram.WebApp.initData)
