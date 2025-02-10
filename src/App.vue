@@ -16,20 +16,16 @@ const userInfo = computed(() => {
 
 // const passPhrase = ref()
 onMounted(() => {
-    // const userData = ref({
-    //     "telegram_id": userInfo.value.id,
-    //     "telegram_init_data": initData.value,
-    //     "public_key": "string"
-    // })
+    const userData = ref({
+        "telegram_id": userInfo.value.id,
+        "telegram_init_data": initData.value,
+        "public_key": "string"
+    })
     // console.log(userData.value);
     console.log(initData.value);
 
     try {
-        const response = axios.post('https://saharvnor.me:5000/api/cards', {
-            "telegram_id": userInfo.value.id,
-            "telegram_init_data": initData.value,
-            "public_key": "string"
-        }, {
+        const response = axios.post('https://saharvnor.me:5000/api/cards', JSON.stringify(userData.value), {
             headers: {
                 "Content-Type": "application/json",
                 "accept": "application/json",
