@@ -33,7 +33,7 @@ const postUser = async () => {
                 "User-Agent": "Mozilla/5.0 (platform; rv:gecko-version) Gecko/gecko-trail Firefox/firefox-version",
             }
         });
-        console.log(response);
+        console.log("response", response);
     } catch (error) {
         console.error('Error submitting form', error);
     }
