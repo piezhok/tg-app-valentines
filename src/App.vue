@@ -18,6 +18,7 @@ const postUser = async (data) => {
     try {
         const response = await axios.post('https://saharvnor.me:5000/api/users/', data, {
             mode: 'no-cors',
+            withCredentials: false,
             headers: {
                 "Content-Type": "application/json",
                 "accept": "application/json",
