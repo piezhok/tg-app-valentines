@@ -26,7 +26,7 @@ onMounted(() => {
 
     try {
         // const response = fetch("https://saharvnor.me:5000/api/cards")
-        const response = axios.post('https://saharvnor.me:5000/api/users', userData.value, {
+        const response = axios.post('https://saharvnor.me:5000/api/users/', userData.value, {
             mode: 'no-cors',
             headers: {
                 "Content-Type": "application/json",
