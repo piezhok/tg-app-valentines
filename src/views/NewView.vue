@@ -2,7 +2,7 @@
 import axios from 'axios';
 import {computed, onMounted, ref} from "vue";
 import {useRouter} from "vue-router";
-import {useStore} from "vuex";
+// import {useStore} from "vuex";
 const addAt = (event) => {
     const input = event.target;
     const fixedText = "@";
@@ -13,13 +13,14 @@ const addAt = (event) => {
 }
 
 const router = useRouter();
-const store = useStore()
-const initData = computed(() => {
-    return store.state.initData;
-})
-const userInfo = computed(() => {
-    return store.getters.userInfo;
-})
+// const store = useStore()
+// const initData = computed(() => {
+//     return store.state.initData;
+// })
+// const userInfo = computed(() => {
+//     return store.getters.userInfo;
+// })
+
 // const initData = ref();
 // const userInfo = ref();
 // const senderId = ref();

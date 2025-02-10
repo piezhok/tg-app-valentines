@@ -35,13 +35,13 @@ async function postUser() {
         console.error('Error submitting form', error);
     }
 }
-if (window.Telegram.WebApp.CloudStorage.getItem("id") == undefined) {
-    await postUser()
-    window.Telegram.WebApp.CloudStorage.setItem("id", userInfo.id);
-}
 
 // const passPhrase = ref()
 onMounted(() => {
+    if (window.Telegram.WebApp.CloudStorage.getItem("id") == undefined) {
+        postUser()
+        window.Telegram.WebApp.CloudStorage.setItem("id", userInfo.id);
+    }
     // console.log(userData.value);
     // postUser();
 
