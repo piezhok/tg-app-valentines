@@ -38,7 +38,7 @@ const postUser = async () => {
         console.error('Error submitting form', error);
     }
 }
-const post = postUser();
+const post = await postUser();
 console.log(post);
 
 // const passPhrase = ref()
