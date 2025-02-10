@@ -2,7 +2,7 @@
 import NavBar from "@/components/NavBar.vue";
 import LettersWheel from "@/components/LettersWheel.vue";
 import {useStore} from "vuex";
-import {computed, onMounted, ref} from "vue";
+import {computed, onMounted} from "vue";
 // import axios from 'axios';
 
 const store = useStore();
@@ -16,11 +16,11 @@ const userInfo = computed(() => {
 
 // const passPhrase = ref()
 onMounted(() => {
-    const userData = ref({
-        "telegram_id": userInfo.value.id,
-        "telegram_init_data": initData.value,
-        "public_key": "string"
-    })
+    // const userData = ref({
+    //     "telegram_id": userInfo.value.id,
+    //     "telegram_init_data": initData.value,
+    //     "public_key": "string"
+    // })
     // console.log(userData.value);
     console.log(initData.value);
 
@@ -30,7 +30,11 @@ onMounted(() => {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(userData.value),
+            body: {
+                "telegram_id": userInfo.value.id,
+                "telegram_init_data": initData.value,
+                "public_key": "string"
+            },
             mode: 'no-cors',
         })
         // const response = axios.post('https://saharvnor.me:5000/api/users/', userData.value, {
