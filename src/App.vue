@@ -2,7 +2,7 @@
 import NavBar from "@/components/NavBar.vue";
 import LettersWheel from "@/components/LettersWheel.vue";
 import {useStore} from "vuex";
-import {computed, onMounted} from "vue";
+import {computed, onMounted, ref} from "vue";
 import axios from 'axios';
 
 const store = useStore();
