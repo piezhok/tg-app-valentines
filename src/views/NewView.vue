@@ -57,6 +57,13 @@ async function submitForm() {
             message: message,
             created_at: 0,
             anonymous: anonymous,
+        }, {
+            mode: 'no-cors',
+            withCredentials: false,
+            headers: {
+                "Content-Type": "application/json",
+                "accept": "application/json"
+            }
         });
         console.log('Form submitted successfully', response);
         router.to = "/sent";
