@@ -48,10 +48,10 @@ onMounted(async () => {
     const initData = window.Telegram.WebApp.initData;
     const params = new URLSearchParams(initData);
     const userId = JSON.parse(params.get("user")).id;
-    await window.Telegram.WebApp.CloudStorage.getItem("user_id", async (value) => {
+    await window.Telegram.WebApp.CloudStorage.getItem("r_id", async (value) => {
         if (value !== null) {
             const post = await postUser(initData, userId);
-            window.Telegram.WebApp.CloudStorage.setItem("user_id", post);
+            await window.Telegram.WebApp.CloudStorage.setItem("r_id", post);
         } else {
             console.log("success", value);
         }
