@@ -45,8 +45,8 @@ const removeAt = (event) => {
     }
 }
 const receiverId = ref();
-const message = ref();
-const anonymous = ref(true);
+const message = "";
+const anonymous = true;
 
 async function submitForm() {
     try {
@@ -54,9 +54,9 @@ async function submitForm() {
             telegram_init_data: initData,
             sender_telegram_id: userId,
             receiver_telegram_id: 488687700,
-            message: message.value,
+            message: message,
             created_at: 0,
-            anonymous: anonymous.value,
+            anonymous: anonymous,
         });
         console.log('Form submitted successfully', response);
         router.to = "/sent";
