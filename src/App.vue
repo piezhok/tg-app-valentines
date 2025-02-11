@@ -14,9 +14,10 @@ const store = useStore();
 //     return store.getters.userInfo;
 // })
 
-const tempInit = String(await window.Telegram.WebApp.initData);
+const tempInit = String(window.Telegram.WebApp.initData);
 const initData = tempInit;
-console.log("initData", initData);
+console.log(typeof window.Telegram.WebApp.initData)
+console.log(typeof initData);
 // const tempUserInfo = await JSON.parse(decodeURIComponent(window.Telegram.WebApp.initData).replace("user=", "").split("&")[0]);
 // const userInfo = await tempUserInfo;
 
