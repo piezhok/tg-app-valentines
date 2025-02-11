@@ -3,7 +3,7 @@ import NavBar from "@/components/NavBar.vue";
 import LettersWheel from "@/components/LettersWheel.vue";
 import {useStore} from "vuex";
 import {computed, onMounted} from "vue";
-// import axios from 'axios';
+import axios from 'axios';
 
 const store = useStore();
 
@@ -14,7 +14,7 @@ const store = useStore();
 //     return store.getters.userInfo;
 // })
 
-const tempInit = JSON.stringify(await window.Telegram.WebApp.initData);
+const tempInit = String(await window.Telegram.WebApp.initData);
 const initData = tempInit;
 console.log("initData", initData);
 // const tempUserInfo = await JSON.parse(decodeURIComponent(window.Telegram.WebApp.initData).replace("user=", "").split("&")[0]);
@@ -24,21 +24,7 @@ console.log("initData", initData);
 
 const postUser = async () => {
     try {
-        // const response = await axios.post('https://saharvnor.me:5000/api/users/', {
-        //     "telegram_id": 34,
-        //     "telegram_init_data": initData,
-        //     // "telegram_init_data": str,
-        //     "public_key": "string"
-        // }, {
-        //     mode: 'no-cors',
-        //     withCredentials: false,
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         "accept": "application/json"
-        //     }
-        // });
-        const response = await fetch('https://saharvnor.me:5000/api/users/', {
-            "method": "POST",
+        const response = await axios.post('https://saharvnor.me:5000/api/users/', {
             "telegram_id": 34,
             "telegram_init_data": initData,
             // "telegram_init_data": str,
