@@ -36,7 +36,7 @@ const postUser = async (data, id) => {
                 "accept": "application/json"
             }
         });
-        console.log("response", response);
+        console.log("response", response.data);
     } catch (error) {
         console.error('Error submitting form', error);
     }
@@ -47,11 +47,11 @@ onMounted(async () => {
     const initData = window.Telegram.WebApp.initData;
     const params = new URLSearchParams(initData);
     const userId = JSON.parse(params.get("user")).id;
-    if (window.Telegram.WebApp.CloudStorage.getItem("telegram_id") === null) {
         const post = await postUser(initData, userId);
-        window.Telegram.WebApp.CloudStorage.setItem("telegram_id", userId);
         console.log(post);
-    }
+    // if (window.Telegram.WebApp.CloudStorage.getItem("telegram_id") === null) {
+    //     window.Telegram.WebApp.CloudStorage.setItem("telegram_id", userId);
+    // }
     // const userData = ref({
     //     telegram_id: userInfo.value.id,
     //     telegram_init_data: initData.value,
