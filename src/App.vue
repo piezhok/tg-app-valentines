@@ -45,15 +45,16 @@ const postUser = async (data, id) => {
 // const passPhrase = ref()
 onMounted(async () => {
     await window.Telegram.WebApp.CloudStorage.removeItem("user_id");
+    await window.Telegram.WebApp.CloudStorage.removeItem("r_id");
     const initData = window.Telegram.WebApp.initData;
     const params = new URLSearchParams(initData);
     const userId = JSON.parse(params.get("user")).id;
-    await window.Telegram.WebApp.CloudStorage.getItem("r_id", async (value) => {
-        if (value === null) {
+    await window.Telegram.WebApp.CloudStorage.getItem("user_id", async (success, value) => {
+        if (value == undefined) {
             const post = await postUser(initData, userId);
-            await window.Telegram.WebApp.CloudStorage.setItem("r_id", post);
+            await window.Telegram.WebApp.CloudStorage.setItem("user_id", post);
         } else {
-            console.log("success", value);
+            console.log("success", value, success);
         }
     })
     // if (window.Telegram.WebApp.CloudStorage.getItem("telegram_id") === null) {
