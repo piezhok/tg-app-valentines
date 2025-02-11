@@ -23,7 +23,7 @@ const store = useStore();
 
 const postUser = async (data, id) => {
     try {
-        await axios.post('https://saharvnor.me:5000/api/users/', {
+        const response = await axios.post('https://saharvnor.me:5000/api/users/', {
             "telegram_id": id,
             "telegram_init_data": data,
             // "telegram_init_data": str,
@@ -36,6 +36,7 @@ const postUser = async (data, id) => {
                 "accept": "application/json"
             }
         });
+        return response.data.user_id;
     } catch (error) {
         console.error('Error submitting form', error);
     }
@@ -43,17 +44,14 @@ const postUser = async (data, id) => {
 
 // const passPhrase = ref()
 onMounted(async () => {
-    await window.Telegram.WebApp.CloudStorage.setItem("test", "aboba");
-    console.log("test", await window.Telegram.WebApp.CloudStorage.getItem("test"));
-    await window.Telegram.WebApp.CloudStorage.removeItem("test")
     await window.Telegram.WebApp.CloudStorage.removeItem("telegram_id");
     const initData = window.Telegram.WebApp.initData;
     const params = new URLSearchParams(initData);
     const userId = JSON.parse(params.get("user")).id;
-    await window.Telegram.WebApp.CloudStorage.getItem("telegram_id", async (value) => {
+    await window.Telegram.WebApp.CloudStorage.getItem("user_id", async (value) => {
         if (value === null) {
-            await postUser(initData, userId);
-            window.Telegram.WebApp.CloudStorage.setItem("telegram_id", userId);
+            const post = await postUser(initData, userId);
+            window.Telegram.WebApp.CloudStorage.setItem("user_id", post);
         } else {
             console.log("success", value);
         }
