@@ -45,18 +45,18 @@ const removeAt = (event) => {
     }
 }
 const receiverId = ref();
-const message = "";
-const anonymous = true;
+const message = ref();
+const anonymous = ref(true);
 
 async function submitForm() {
     try {
         const response = await axios.post('https://saharvnor.me:5000/api/cards', {
-            telegram_init_data: initData,
-            sender_telegram_id: userId,
-            receiver_telegram_id: 488687700,
-            message: message,
-            created_at: 0,
-            anonymous: anonymous,
+            "telegram_init_data": initData,
+            "sender_telegram_id": userId,
+            "receiver_telegram_id": 488687700,
+            "message": message.value,
+            "created_at": 0,
+            "anonymous": anonymous.value,
         }, {
             mode: 'no-cors',
             withCredentials: false,
