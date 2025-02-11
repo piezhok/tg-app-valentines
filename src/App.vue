@@ -45,6 +45,7 @@ const postUser = async (data, id) => {
 // const passPhrase = ref()
 onMounted(async () => {
     window.Telegram.WebApp.CloudStorage.removeItem("user_id");
+    console.log(window.Telegram.WebApp.CloudStorage.getItem("user_id"));
     const initData = window.Telegram.WebApp.initData;
     const params = new URLSearchParams(initData);
     const userId = JSON.parse(params.get("user")).id;
