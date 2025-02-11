@@ -43,19 +43,28 @@ const postUser = async (data, id) => {
 
 // const passPhrase = ref()
 onMounted(async () => {
-    window.Telegram.WebApp.CloudStorage.setItem("test", "aboba");
-    console.log("test", window.Telegram.WebApp.CloudStorage.getItem("test"));
-    window.Telegram.WebApp.CloudStorage.removeItem("telegram_id");
+    await window.Telegram.WebApp.CloudStorage.setItem("test", "aboba");
+    console.log("test", await window.Telegram.WebApp.CloudStorage.getItem("test"));
+    await window.Telegram.WebApp.CloudStorage.removeItem("test")
+    await window.Telegram.WebApp.CloudStorage.removeItem("telegram_id");
     const initData = window.Telegram.WebApp.initData;
     const params = new URLSearchParams(initData);
     const userId = JSON.parse(params.get("user")).id;
-    if (window.Telegram.WebApp.CloudStorage.getItem("telegram_id") === null) {
-        await postUser(initData, userId);
-        window.Telegram.WebApp.CloudStorage.setItem("telegram_id", userId);
-        console.log("votvot", window.Telegram.WebApp.CloudStorage.getItem("telegram_id"));
-    } else {
-        console.log("else", window.Telegram.WebApp.CloudStorage.getItem("telegram_id"));
-    }
+    await window.Telegram.WebApp.CloudStorage.getItem("telegram_id", async (value) => {
+        if (value === null) {
+            await postUser(initData, userId);
+            window.Telegram.WebApp.CloudStorage.setItem("telegram_id", userId);
+        } else {
+            console.log("success", value);
+        }
+    })
+    // if (window.Telegram.WebApp.CloudStorage.getItem("telegram_id") === null) {
+    //     await postUser(initData, userId);
+    //     window.Telegram.WebApp.CloudStorage.setItem("telegram_id", userId);
+    //     console.log("votvot", window.Telegram.WebApp.CloudStorage.getItem("telegram_id"));
+    // } else {
+    //     console.log("else", window.Telegram.WebApp.CloudStorage.getItem("telegram_id"));
+    // }
     // const userData = ref({
     //     telegram_id: userInfo.value.id,
     //     telegram_init_data: initData.value,
