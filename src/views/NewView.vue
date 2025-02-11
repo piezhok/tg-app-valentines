@@ -44,6 +44,9 @@ const removeAt = (event) => {
         input.value = "";
     }
 }
+const receiverId = ref();
+const message = ref();
+const anonymous = ref(true);
 
 async function submitForm() {
     try {
@@ -51,9 +54,9 @@ async function submitForm() {
             telegram_init_data: initData,
             sender_telegram_id: userId,
             receiver_telegram_id: 488687700,
-            message: "",
+            message: message.value,
             created_at: 0,
-            anonymous: true
+            anonymous: anonymous.value,
         });
         console.log('Form submitted successfully', response);
         router.to = "/sent";
@@ -73,22 +76,22 @@ async function submitForm() {
             </div>
             <div class="input-box to">
                 <label for="to-input">Кому</label>
-                <input type="text" id="to-input" required placeholder="@username" autocorrect="off" autocapitalize="off" spellcheck="false" @focus="addAt" @input="addAt" @blur="removeAt"/>
+                <input v-model="receiverId" type="text" id="to-input" required placeholder="@username" autocorrect="off" autocapitalize="off" spellcheck="false" @focus="addAt" @input="addAt" @blur="removeAt"/>
             </div>
         </div>
-        <textarea v-model="formData.message" wrap="hard" class="message-box" required></textarea>
+        <textarea v-model="message" wrap="hard" class="message-box" required></textarea>
         <div class="control-container">
             <div class="anon-radio_container">
                 <div class="anon-radio">
-                    <input type="radio" id="anon1" name="anonymous" v-model="formData.anonymous" value=true>
+                    <input type="radio" id="anon1" name="anonymous" v-model="anonymous" value=true>
                     <label for="anon1">Анонимно</label>
                 </div>
                 <div class="anon-radio">
-                    <input type="radio" id="anon2" name="anonymous" v-model="formData.anonymous" value=false>
+                    <input type="radio" id="anon2" name="anonymous" v-model="anonymous" value=false>
                     <label for="anon2">Открыто</label>
                 </div>
                 <div class="anon-radio">
-                    <input type="radio" id="anon3" name="anonymous" v-model="formData.anonymous" value="" disabled>
+                    <input type="radio" id="anon3" name="anonymous" v-model="anonymous" value="" disabled>
                     <label for="anon3">Тайно</label>
                 </div>
             </div>
