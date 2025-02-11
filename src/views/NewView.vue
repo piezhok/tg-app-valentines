@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import {computed, onMounted, ref} from "vue";
+import {onMounted} from "vue";
 import {useRouter} from "vue-router";
 import {useStore} from "vuex";
 const addAt = (event) => {
@@ -13,7 +13,6 @@ const addAt = (event) => {
 }
 
 const router = useRouter();
-const store = useStore()
 // const initData = computed(() => {
 //     return store.state.initData;
 // })
