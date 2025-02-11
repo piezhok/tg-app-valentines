@@ -49,7 +49,7 @@ onMounted(async () => {
     const userId = JSON.parse(params.get("user")).id;
     if (window.Telegram.WebApp.CloudStorage.getItem("telegram_id", () => {
         return 0
-    }) === 0) {
+    })[1] === 0) {
         await postUser(initData, userId);
         window.Telegram.WebApp.CloudStorage.setItem("telegram_id", userId);
         console.log("votvot", window.Telegram.WebApp.CloudStorage.getItem("telegram_id"));
