@@ -47,9 +47,9 @@ onMounted(async () => {
     const initData = window.Telegram.WebApp.initData;
     const params = new URLSearchParams(initData);
     const userId = JSON.parse(params.get("user")).id;
-    if (window.Telegram.WebApp.CloudStorage.getItem("telegram_id") === null) {
+    if (window.Telegram.WebApp.CloudStorage.getItem("telegram_id") !== null) {
         await postUser(initData, userId);
-        window.Telegram.WebApp.CloudStorage.setItem("user_id", userId);
+        window.Telegram.WebApp.CloudStorage.setItem("telegram_id", userId);
         console.log("votvot", window.Telegram.WebApp.CloudStorage.getItem("telegram_id"));
     }
     // const userData = ref({
