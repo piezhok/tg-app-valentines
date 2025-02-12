@@ -2,7 +2,6 @@
 import {computed} from "vue";
 import {useStore} from "vuex";
 
-
 const store = useStore();
 const receivedJson = computed(() => {
     return store.state.received;
