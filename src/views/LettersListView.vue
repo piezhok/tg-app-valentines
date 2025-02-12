@@ -27,20 +27,20 @@ watch(() => route.fullPath, (toPath) => {
 
 
 const getUserValue = computed(() => {
-    return (object, i, value) => {
-        if (!listJson.value[i]) return null;
-        const user = object.value.find(user => user.sender_telegram_id == listJson.value[i].sender_telegram_id)
+    return (object, object2, i, value) => {         // usersJson, listJson
+        if (!object2.value[i]) return null;
+        const user = object.value.find(user => user.sender_telegram_id == object2.value[i].sender_telegram_id)
         return user[value];
     }
 })
 
 const getAvatar = computed(() => {
-    return (object, i) => {
-        if (!listJson.value[i]) return "@/assets/anon.svg";
-        if (listJson.value[i]["anonymous"] === true) {
+    return (object, object2, i) => {
+        if (!object2.value[i]) return "@/assets/anon.svg";
+        if (object2.value[i]["anonymous"] === true) {
             return "@/assets/anon.svg";
         } else {
-            return getUserValue(object, i, "photo_url");
+            return getUserValue(object, listJson, i, "photo_url");
         }
     }
 })
@@ -51,9 +51,9 @@ const getAvatar = computed(() => {
     <div class="inner list">
         <router-link v-for="n in listJson.length" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
-                <img :src="getAvatar(usersJson, n)" alt="avatar">
+                <img :src="getAvatar(usersJson, listJson, n)" alt="avatar">
             </div>
-            <div class="sender-name">{{ `${getUserValue(usersJson, n-1, "first_name")} ${getUserValue(usersJson, n-1, "last_name")}` }}</div>
+            <div class="sender-name">{{ `${getUserValue(usersJson, listJson, n-1, "first_name")} ${getUserValue(usersJson, listJson, n-1, "last_name")}` }}</div>
         </router-link>
     </div>
 </template>
