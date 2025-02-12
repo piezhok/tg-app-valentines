@@ -7,6 +7,22 @@ const store = useStore();
 const receivedJson = computed(() => {
     return store.state.received;
 })
+const usersJson = computed(() => {
+    return store.state.users;
+})
+
+const getUserValue = (i, value) => {
+    const user = usersJson.value.find(user => user.sender_telegram_id == receivedJson[i].sender_telegram_id)
+    return user[value];
+}
+
+const getAvatar = (i) => {
+    if (receivedJson[i].anonymous === true) {
+        return "@/assets/anon.svg"
+    } else {
+        return getUserValue(i, "photo_url");
+    }
+}
 
 </script>
 
@@ -14,9 +30,9 @@ const receivedJson = computed(() => {
     <div class="inner list">
         <router-link v-for="n in receivedJson.length" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
-                <img src="" alt="avatar">
+                <img :src="getAvatar(n)" alt="avatar">
             </div>
-            <div class="sender-name">{{ receivedJson[n-1].sender_telegram_id }}</div>
+            <div class="sender-name">{{ `${getUserValue(n-1, "first_name")} ${getUserValue(n-1, "last_name")}` }}</div>
         </router-link>
     </div>
 </template>
