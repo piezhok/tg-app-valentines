@@ -17,6 +17,7 @@ const receivedLength = computed(() => {
 
 const getUserValue = (letterslist, i, value) => {
     const user = usersJson.value.find(user => user.sender_telegram_id == letterslist[i].sender_telegram_id)
+    console.log("user", user)
     return user[value];
 }
 
