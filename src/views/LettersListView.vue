@@ -1,9 +1,9 @@
 <script setup>
-import {watch, ref, computed} from "vue";
+import {onMounted, ref} from "vue";
 import {useStore} from "vuex";
-import {useRoute} from "vue-router";
+// import {useRoute} from "vue-router";
 
-const route = useRoute();
+// const route = useRoute();
 const store = useStore();
 // const listJson = computed(() => {
 //     return store.state.received;
@@ -12,49 +12,38 @@ const store = useStore();
 //     return store.state.users;
 // })
 
-const listJson = ref();
-const usersJson = ref();
+const receivedJson = ref();
+const sentJson = ref();
+const usersJson = ref()
 
-watch(() => route.fullPath, (toPath) => {
-    if (toPath == "/received") {
-        listJson.value = store.state.received;
-        console.log(listJson.value);
-    } else if (toPath == "/sent") {
-        listJson.value = store.state.sent;
-    }
-    usersJson.value = store.state.users;
-}, { immediate: true });
-
-
-const getUserValue = computed(() => {
-    return (object, object2, i, value) => {         // usersJson, listJson
-        console.log(object);
-        if (!object2[i]) return null;
-        const user = object.find(user => user.sender_telegram_id == object2[i].sender_telegram_id)
-        return user[value];
-    }
+onMounted(async () => {
+    receivedJson.value = await store.state.received;
+    sentJson.value = await store.state.sent;
+    usersJson.value = await store.state.users;
 })
 
-const getAvatar = computed(() => {
-    return (object, object2, i) => {
-        if (!object2[i]) return "@/assets/anon.svg";
-        if (object2[i]["anonymous"] === true) {
-            return "@/assets/anon.svg";
-        } else {
-            return getUserValue(object, object2, i, "photo_url");
-        }
+const getUserValue = (letterslist, i, value) => {
+    const user = usersJson.value.find(user => user.sender_telegram_id == letterslist[i].sender_telegram_id)
+    return user[value];
+}
+
+const getAvatar = (letterslist, i) => {
+    if (letterslist[i]["anonymous"] === true) {
+        return "@/assets/anon.svg";
+    } else {
+        return getUserValue(letterslist, i, "photo_url");
     }
-})
+}
 
 </script>
 
 <template>
     <div class="inner list">
-        <router-link v-for="n in listJson.length" :key="'letter'+n" :to="'/received/'+n">
+        <router-link v-for="n in receivedJson.value.length" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
-                <img :src="getAvatar(usersJson, listJson, n)" alt="avatar">
+                <img :src="getAvatar(receivedJson, n)" alt="avatar">
             </div>
-            <div class="sender-name">{{ `${getUserValue(usersJson, listJson, n-1, "first_name")} ${getUserValue(usersJson, listJson, n-1, "last_name")}` }}</div>
+            <div class="sender-name">{{ `${getUserValue(receivedJson.value, n-1, "first_name")} ${getUserValue(receivedJson.value, n-1, "last_name")}` }}</div>
         </router-link>
     </div>
 </template>
