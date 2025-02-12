@@ -41,7 +41,7 @@ const postUser = async (data, id) => {
         console.error('Error submitting form', error);
     }
 }
-
+console.log("waiwaiwait", window.Telegram.WebApp.initData)
 // let initData ,userId;
 // const passPhrase = ref()
 onMounted(async () => {
