@@ -45,12 +45,14 @@ export default new createStore({
             }
         },
         async getLetters({ commit }, userId, initData) {
-            const response = await axios.get('https://saharvnor.me:5000/api/cards/', {
-                params: {
-                    "user_id": userId,
-                    "telegram_init_data": initData,
-                }
-            });
+            const response = await axios.get(`https://saharvnor.me:5000/api/cards/?user_id=${userId}&telegram_init_data=${initData}`
+                // , {
+                // params: {
+                //     "user_id": userId,
+                //     "telegram_init_data": initData,
+                // }
+            // }
+            );
             const data = await response.data;
             await commit('setReceived', data.received);
             await commit('setSent', data.sent);
