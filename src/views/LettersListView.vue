@@ -12,7 +12,7 @@ const usersJson = computed(() => {
     return store.state.users;
 })
 const receivedLenght = computed(() => {
-    return receivedJson.value.length;
+    return store.state.received.length;
 })
 
 const getUserValue = (letterslist, i, value) => {
