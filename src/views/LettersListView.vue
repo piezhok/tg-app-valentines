@@ -12,9 +12,9 @@ const store = useStore();
 //     return store.state.users;
 // })
 
-const receivedJson = ref();
-const sentJson = ref();
-const usersJson = ref()
+const receivedJson = ref([]);
+const sentJson = ref([]);
+const usersJson = ref([])
 
 onBeforeMount(async () => {
     receivedJson.value = await store.state.received;
