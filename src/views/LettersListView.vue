@@ -11,7 +11,7 @@ const receivedJson = computed(() => {
 const usersJson = computed(() => {
     return store.state.users;
 })
-const receivedLenght = computed(() => {
+const receivedLength = computed(() => {
     return store.state.received.length;
 })
 
@@ -32,7 +32,7 @@ const getAvatar = (letterslist, i) => {
 
 <template>
     <div class="inner list">
-        <router-link v-for="n in receivedLenght" :key="'letter'+n" :to="'/received/'+n">
+        <router-link v-for="n in receivedLength" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
                 <img :src="getAvatar(receivedJson, n)" alt="avatar">
             </div>
