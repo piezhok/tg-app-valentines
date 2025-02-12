@@ -16,16 +16,16 @@ const store = useStore();
 const listJson = ref();
 const usersJson = ref();
 
-const getUserValue = (i, value) => {
-    const user = usersJson.value.find(user => user.sender_telegram_id == listJson[i].sender_telegram_id)
+const getUserValue = async (i, value) => {
+    const user = await usersJson.value.find(async user => await user.sender_telegram_id == await listJson[i].sender_telegram_id)
     return user[value];
 }
 
-const getAvatar = (i) => {
+const getAvatar = async (i) => {
     if (listJson[i].anonymous === true) {
         return "@/assets/anon.svg";
     } else {
-        return getUserValue(i, "photo_url");
+        return await getUserValue(i, "photo_url");
     }
 }
 
