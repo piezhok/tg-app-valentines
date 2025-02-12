@@ -1,27 +1,85 @@
 <script setup>
-    import {useRoute} from "vue-router";
+import {ref, watch} from "vue";
+import {useStore} from "vuex";
+import {useRoute} from "vue-router";
 
-    const route = useRoute();
+const route = useRoute();
+const store = useStore();
+// const listJson = computed(() => {
+//     console.log("Received", store.state.received[0]);
+//     return store.state.received;
+// })
+// const usersJson = computed(() => {
+//     console.log("Users", store.state.users);
+//     return store.state.users;
+// })
+const listJson = ref();
+const usersJson = ref();
 
-    if (route.fullPath === "/received") {
-        console.log("щаща");
+const getUserValue = (i, value) => {
+    const user = usersJson.value.find(user => user.sender_telegram_id == listJson[i].sender_telegram_id)
+    return user[value];
+}
+
+const getAvatar = (i) => {
+    if (listJson[i].anonymous === true) {
+        return "@/assets/anon.svg";
+    } else {
+        return getUserValue(i, "photo_url");
     }
+}
 
-    // const getList = async () => {
-    // }
+watch(() => route.fullPath, (toPath) => {
+    if (toPath == "/received") {
+        listJson.value = store.state.received;
+    } else if (toPath == "/sent") {
+        listJson.value = store.state.sent;
+    }
+    usersJson.value = store.state.users;
+}, { immediate: true });
 </script>
 
 <template>
     <div class="inner list">
-        <router-link v-for="n in receivedJson.length" :key="'letter'+n" :to="'/received/'+n">
+        <router-link v-for="n in listJson.length" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
-                <img src="" alt="avatar">
+                <img :src="getAvatar(n)" alt="avatar">
             </div>
-            <div class="sender-name">{{ receivedJson[n-1].sender_telegram_id }}</div>
+            <div class="sender-name">{{ `${getUserValue(n-1, "first_name")} ${getUserValue(n-1, "last_name")}` }}</div>
         </router-link>
     </div>
 </template>
 
-<style scoped lang="scss">
+<style scoped>
+.inner {
+    margin: 0 1rem !important;
+}
 
+a {
+    all: unset;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    cursor: pointer;
+    margin: 1.5rem 0;
+    position: relative;
+
+    .avatar {
+        width: 4.875rem;
+        height: 4.875rem;
+        background-color: #B1244A;
+        border-radius: 100rem;
+    }
+}
+
+a::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: .05rem;
+    background-color: var(--secondary-stroke-color);
+    position: absolute;
+    bottom: -1.5rem;
+}
 </style>
