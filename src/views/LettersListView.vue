@@ -1,5 +1,5 @@
 <script setup>
-import {onBeforeMount, ref} from "vue";
+import {computed, onBeforeMount, ref} from "vue";
 import {useStore} from "vuex";
 // import {useRoute} from "vue-router";
 
@@ -22,6 +22,10 @@ onBeforeMount(async () => {
     usersJson.value = await store.state.users;
 })
 
+const listLength = computed(() => {
+    return receivedJson.value.length;
+})
+
 const getUserValue = (letterslist, i, value) => {
     const user = usersJson.value.find(user => user.sender_telegram_id == letterslist[i].sender_telegram_id)
     return user[value];
@@ -39,7 +43,7 @@ const getAvatar = (letterslist, i) => {
 
 <template>
     <div class="inner list">
-        <router-link v-for="n in receivedJson.length" :key="'letter'+n" :to="'/received/'+n">
+        <router-link v-for="n in listLength" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
                 <img :src="getAvatar(receivedJson, n)" alt="avatar">
             </div>
