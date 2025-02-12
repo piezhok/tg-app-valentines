@@ -49,7 +49,7 @@ export default new createStore({
                 params: {
                     user_id: userId,
                     telegram_init_data: initData,
-                }
+                },
                 headers: {
                     "accept": "application/json"
                 }
