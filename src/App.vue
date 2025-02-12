@@ -61,7 +61,7 @@ onMounted(async () => {
 // onBeforeMount(() => {
 //     store.dispatch("fetchReceived");
 // })
-store.dispatch("getLetters", parseInt(userId), initData);
+store.dispatch("getLetters");
 const quantity = computed( () => {
     return store.state.received.length
 });
