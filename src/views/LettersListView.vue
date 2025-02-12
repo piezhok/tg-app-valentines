@@ -25,7 +25,7 @@ const getUserValue = (letterslist, i, value) => {
 const getAvatar = (letterslist, i) => {
     console.log("getAvatar", letterslist[i]["anonymous"]);
     if (letterslist[i]["anonymous"] === true) {
-        return "/src/assets/anon.svg";
+        return "src/assets/anon.svg";
     } else {
         return getUserValue(letterslist, i, "photo_url");
     }
