@@ -17,14 +17,14 @@ const receivedLength = computed(() => {
 
 const getUserValue = (letterslist, i, value) => {
     console.log(usersJson.value);
-    const user = usersJson.value.find(user => user.id == letterslist[i-1].sender_telegram_id)
+    const user = usersJson.value.find(user => user.id == letterslist[i].sender_telegram_id)
     console.log("user", user)
     return user[value];
 }
 
 const getAvatar = (letterslist, i) => {
-    console.log("getAvatar", letterslist[i-1]["anonymous"]);
-    if (letterslist[i-1]["anonymous"] === true) {
+    console.log("getAvatar", letterslist[i]["anonymous"]);
+    if (letterslist[i]["anonymous"] === true) {
         return "@/assets/anon.svg";
     } else {
         return getUserValue(letterslist, i, "photo_url");
@@ -37,9 +37,9 @@ const getAvatar = (letterslist, i) => {
     <div class="inner list">
         <router-link v-for="n in receivedLength" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
-                <img :src="getAvatar(receivedJson, n)" alt="avatar">
+                <img :src="getAvatar(receivedJson, n-1)" alt="avatar">
             </div>
-            <div class="sender-name">{{ `${getUserValue(receivedJson, n-1, "first_name")} ${getUserValue(receivedJson, n, "last_name")}` }}</div>
+            <div class="sender-name">{{ `${getUserValue(receivedJson, n-1, "first_name")} ${getUserValue(receivedJson, n-1, "last_name")}` }}</div>
         </router-link>
     </div>
 </template>
