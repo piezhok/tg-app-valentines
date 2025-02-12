@@ -22,7 +22,7 @@ const getUserValue = (i, value) => {
 }
 
 const getAvatar = (i) => {
-    if (listJson[i].anonymous === true) {
+    if (listJson[i]["anonymous"] === true) {
         return "@/assets/anon.svg";
     } else {
         return getUserValue(i, "photo_url");
