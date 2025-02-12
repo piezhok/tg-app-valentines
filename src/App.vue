@@ -44,7 +44,7 @@ const postUser = async (data, id) => {
 console.log("waiwaiwait", window.Telegram.WebApp.initData)
 // let initData ,userId;
 // const passPhrase = ref()
-const initData = window.Telegram.WebApp.initData;
+const initData = await window.Telegram.WebApp.initData;
 const params = new URLSearchParams(initData);
 const userId = JSON.parse(params.get("user")).id;
 onMounted(async () => {
