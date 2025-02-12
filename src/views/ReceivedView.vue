@@ -4,9 +4,11 @@ import {useStore} from "vuex";
 
 const store = useStore();
 const receivedJson = computed(() => {
+    console.log("Received", store.state.received);
     return store.state.received;
 })
 const usersJson = computed(() => {
+    console.log("Users", store.state.users);
     return store.state.users;
 })
 
