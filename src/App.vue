@@ -2,7 +2,7 @@
 import NavBar from "@/components/NavBar.vue";
 import LettersWheel from "@/components/LettersWheel.vue";
 import {useStore} from "vuex";
-import {computed, onMounted} from "vue";
+import {computed, onBeforeMount} from "vue";
 import axios from 'axios';
 
 const store = useStore();
@@ -44,7 +44,7 @@ const postUser = async (data, id) => {
 
 // let initData ,userId;
 // const passPhrase = ref()
-onMounted(async () => {
+onBeforeMount(async () => {
     const initData = await window.Telegram.WebApp.initData;
     const params = new URLSearchParams(initData);
     const userId = JSON.parse(params.get("user")).id;
