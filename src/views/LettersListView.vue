@@ -20,11 +20,11 @@ const getUserValue = (letterslist, i, value) => {
     return user[value];
 }
 
-const getAvatar = (letterslist, i) => {
-    if (letterslist[i]["anonymous"] === true) {
+const getAvatar = async (letterslist, i) => {
+    if (await letterslist[i]["anonymous"] === true) {
         return "@/assets/anon.svg";
     } else {
-        return getUserValue(letterslist, i, "photo_url");
+        return await getUserValue(letterslist, i, "photo_url");
     }
 }
 
