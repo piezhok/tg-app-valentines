@@ -21,7 +21,7 @@ const getUserValue = (letterslist, i, value) => {
 }
 
 const getAvatar = async (letterslist, i) => {
-    while (await letterslist[i]["anonymous"] == undefined) {getAvatar(letterslist, i)}
+    console.log("getAvatar", letterslist[i]["anonymous"]);
     if (await letterslist[i]["anonymous"] === true) {
         return "@/assets/anon.svg";
     } else {
