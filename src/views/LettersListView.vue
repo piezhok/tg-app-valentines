@@ -1,16 +1,29 @@
 <script setup>
-import {computed} from "vue";
+import {watch, ref} from "vue";
 import {useStore} from "vuex";
-// import {useRoute} from "vue-router";
+import {useRoute} from "vue-router";
 
-// const route = useRoute();
+const route = useRoute();
 const store = useStore();
-const listJson = computed(() => {
-    return store.state.received;
-})
-const usersJson = computed(() => {
-    return store.state.users;
-})
+// const listJson = computed(() => {
+//     return store.state.received;
+// })
+// const usersJson = computed(() => {
+//     return store.state.users;
+// })
+
+const listJson = ref();
+const usersJson = ref();
+
+watch(() => route.fullPath, (toPath) => {
+    if (toPath == "/received") {
+        listJson.value = store.state.received;
+    } else if (toPath == "/sent") {
+        listJson.value = store.state.sent;
+    }
+    usersJson.value = store.state.users;
+}, { immediate: true });
+
 
 const getUserValue = (i, value) => {
     const user = usersJson.value.find(user => user.sender_telegram_id == listJson.value[i].sender_telegram_id)
@@ -25,14 +38,6 @@ const getAvatar = (i) => {
     }
 }
 
-// watch(() => route.fullPath, (toPath) => {
-    // if (toPath == "/received") {
-    //     listJson.value = store.state.received;
-    // } else if (toPath == "/sent") {
-    //     listJson.value = store.state.sent;
-    // }
-    // usersJson.value = store.state.users;
-// }, { immediate: true });
 </script>
 
 <template>
