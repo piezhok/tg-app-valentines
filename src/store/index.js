@@ -54,6 +54,8 @@ export default new createStore({
                 }
             });
             const data = await response.data;
+            console.log(data);
+            console.log("anon", data.received[0].anonymous);
             await commit('setReceived', data.received);
             await commit('setSent', data.sent);
             await commit('setUsers', data.users);
