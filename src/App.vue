@@ -56,7 +56,7 @@ onMounted(async () => {
             console.log("success", value, success);
         }
     })
-    await store.dispatch("getLetters", [userId, initData]);
+    await store.dispatch("getLetters", [userId, params]);
 })
 
 // onBeforeMount(() => {
