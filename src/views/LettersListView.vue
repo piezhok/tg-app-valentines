@@ -1,5 +1,5 @@
 <script setup>
-import {watch, ref} from "vue";
+import {watch, ref, computed} from "vue";
 import {useStore} from "vuex";
 import {useRoute} from "vue-router";
 
@@ -25,18 +25,18 @@ watch(() => route.fullPath, (toPath) => {
 }, { immediate: true });
 
 
-const getUserValue = (i, value) => {
+const getUserValue = computed(() => (i, value) => {
     const user = usersJson.value.find(user => user.sender_telegram_id == listJson.value[i].sender_telegram_id)
     return user[value];
-}
+})
 
-const getAvatar = (i) => {
+const getAvatar = computed(() => (i) => {
     if (listJson.value[i]["anonymous"] === true) {
         return "@/assets/anon.svg";
     } else {
         return getUserValue(i, "photo_url");
     }
-}
+})
 
 </script>
 
