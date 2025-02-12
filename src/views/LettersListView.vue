@@ -1,26 +1,27 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {computed} from "vue";
 import {useStore} from "vuex";
 // import {useRoute} from "vue-router";
 
 // const route = useRoute();
 const store = useStore();
-// const listJson = computed(() => {
-//     return store.state.received;
-// })
-// const usersJson = computed(() => {
-//     return store.state.users;
-// })
 
-const receivedJson = ref();
-const sentJson = ref();
-const usersJson = ref()
-
-onMounted(async () => {
-    receivedJson.value = await store.state.received;
-    sentJson.value = await store.state.sent;
-    usersJson.value = await store.state.users;
+const receivedJson = computed(() => {
+    return store.state.received;
 })
+const usersJson = computed(() => {
+    return store.state.users;
+})
+
+// const receivedJson = ref();
+// const sentJson = ref();
+// const usersJson = ref()
+
+// onMounted(async () => {
+//     receivedJson.value = await store.state.received;
+//     sentJson.value = await store.state.sent;
+//     usersJson.value = await store.state.users;
+// })
 
 const getUserValue = (letterslist, i, value) => {
     const user = usersJson.value.find(user => user.sender_telegram_id == letterslist[i].sender_telegram_id)
