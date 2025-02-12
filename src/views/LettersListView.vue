@@ -17,9 +17,9 @@ const sentJson = ref([]);
 const usersJson = ref([])
 
 onBeforeMount(async () => {
-    receivedJson.value = await store.state.received;
-    sentJson.value = await store.state.sent;
-    usersJson.value = await store.state.users;
+    receivedJson.value = store.state.received;
+    sentJson.value = store.state.sent;
+    usersJson.value = store.state.users;
 })
 
 const getUserValue = (letterslist, i, value) => {
