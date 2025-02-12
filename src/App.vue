@@ -42,12 +42,12 @@ const postUser = async (data, id) => {
     }
 }
 
-const initData = window.Telegram.WebApp.initData;
-const params = new URLSearchParams(initData);
-const userId = JSON.parse(params.get("user")).id;
 // let initData ,userId;
 // const passPhrase = ref()
 onMounted(async () => {
+    const initData = window.Telegram.WebApp.initData;
+    const params = new URLSearchParams(initData);
+    const userId = JSON.parse(params.get("user")).id;
     await window.Telegram.WebApp.CloudStorage.getItem("user_id", async (success, value) => {
         if (value == "") {
             const post = await postUser(initData, userId);
@@ -56,12 +56,12 @@ onMounted(async () => {
             console.log("success", value, success);
         }
     })
+    store.dispatch("getLetters", userId, initData);
 })
 
 // onBeforeMount(() => {
 //     store.dispatch("fetchReceived");
 // })
-store.dispatch("getLetters", userId, initData);
 const quantity = computed( () => {
     return store.state.received.length
 });
