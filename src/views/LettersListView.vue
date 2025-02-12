@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onBeforeMount, ref} from "vue";
+import {onBeforeMount, ref} from "vue";
 import {useStore} from "vuex";
 // import {useRoute} from "vue-router";
 
@@ -20,10 +20,6 @@ onBeforeMount(async () => {
     receivedJson.value = await store.state.received;
     sentJson.value = await store.state.sent;
     usersJson.value = await store.state.users;
-})
-
-const listLength = computed(() => {
-    return receivedJson.value.length;
 })
 
 const getUserValue = (letterslist, i, value) => {
