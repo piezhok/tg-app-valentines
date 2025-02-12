@@ -28,19 +28,20 @@ watch(() => route.fullPath, (toPath) => {
 
 const getUserValue = computed(() => {
     return (object, object2, i, value) => {         // usersJson, listJson
-        if (!object2.value[i]) return null;
-        const user = object.value.find(user => user.sender_telegram_id == object2.value[i].sender_telegram_id)
+        console.log(object);
+        if (!object2[i]) return null;
+        const user = object.find(user => user.sender_telegram_id == object2[i].sender_telegram_id)
         return user[value];
     }
 })
 
 const getAvatar = computed(() => {
     return (object, object2, i) => {
-        if (!object2.value[i]) return "@/assets/anon.svg";
-        if (object2.value[i]["anonymous"] === true) {
+        if (!object2[i]) return "@/assets/anon.svg";
+        if (object2[i]["anonymous"] === true) {
             return "@/assets/anon.svg";
         } else {
-            return getUserValue(object, listJson, i, "photo_url");
+            return getUserValue(object, object2, i, "photo_url");
         }
     }
 })
