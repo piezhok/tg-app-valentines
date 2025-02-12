@@ -54,7 +54,9 @@ export default new createStore({
                     "accept": "application/json"
                 }
             });
+            console.log("response", response);
             const data = await response.data;
+            console.log("data", data);
             await commit('setReceived', data.received);
             await commit('setSent', data.sent);
             await commit('setUsers', data.users);
