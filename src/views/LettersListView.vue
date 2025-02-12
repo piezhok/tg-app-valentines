@@ -26,16 +26,22 @@ watch(() => route.fullPath, (toPath) => {
 }, { immediate: true });
 
 
-const getUserValue = computed(() => (object, i, value) => {
-    const user = object.value.find(user => user.sender_telegram_id == listJson.value[i].sender_telegram_id)
-    return user[value];
+const getUserValue = computed(() => {
+    return (object, i, value) => {
+        if (!listJson.value[i]) return null;
+        const user = object.value.find(user => user.sender_telegram_id == listJson.value[i].sender_telegram_id)
+        return user[value];
+    }
 })
 
-const getAvatar = computed(() => (object, i) => {
-    if (listJson.value[i]["anonymous"] === true) {
-        return "@/assets/anon.svg";
-    } else {
-        return getUserValue(object, i, "photo_url");
+const getAvatar = computed(() => {
+    return (object, i) => {
+        if (!listJson.value[i]) return "@/assets/anon.svg";
+        if (listJson.value[i]["anonymous"] === true) {
+            return "@/assets/anon.svg";
+        } else {
+            return getUserValue(object, i, "photo_url");
+        }
     }
 })
 
