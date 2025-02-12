@@ -53,10 +53,12 @@ async function submitForm() {
         const response = await axios.post('https://saharvnor.me:5000/api/cards', {
             "telegram_init_data": initData,
             "sender_telegram_id": userId,
-            "receiver_telegram_id": 488687700,
+            "receiver_telegram_username": "otodna",
             "message": message.value,
             "created_at": 0,
             "anonymous": anonymous.value,
+            "color": 0,
+            "background_emoji": 0
         }, {
             mode: 'no-cors',
             withCredentials: false,
