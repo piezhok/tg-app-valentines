@@ -1,25 +1,18 @@
 <script setup>
-import {onBeforeMount, ref} from "vue";
+import {computed} from "vue";
 import {useStore} from "vuex";
 // import {useRoute} from "vue-router";
 
 // const route = useRoute();
 const store = useStore();
-// const listJson = computed(() => {
-//     return store.state.received;
-// })
-// const usersJson = computed(() => {
-//     return store.state.users;
-// })
-
-const receivedJson = ref([]);
-const sentJson = ref([]);
-const usersJson = ref([])
-
-onBeforeMount(async () => {
-    receivedJson.value = store.state.received;
-    sentJson.value = store.state.sent;
-    usersJson.value = store.state.users;
+const receivedJson = computed(() => {
+    return store.state.received;
+})
+const usersJson = computed(() => {
+    return store.state.users;
+})
+const receivedLenght = computed(() => {
+    return receivedJson.value.length;
 })
 
 const getUserValue = (letterslist, i, value) => {
@@ -39,7 +32,7 @@ const getAvatar = (letterslist, i) => {
 
 <template>
     <div class="inner list">
-        <router-link v-for="n in 2" :key="'letter'+n" :to="'/received/'+n">
+        <router-link v-for="n in receivedLenght" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
                 <img :src="getAvatar(receivedJson, n)" alt="avatar">
             </div>
