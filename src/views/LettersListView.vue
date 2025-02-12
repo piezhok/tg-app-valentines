@@ -43,7 +43,7 @@ const getAvatar = (letterslist, i) => {
 
 <template>
     <div class="inner list">
-        <router-link v-for="n in listLength" :key="'letter'+n" :to="'/received/'+n">
+        <router-link v-for="n in 2" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
                 <img :src="getAvatar(receivedJson, n)" alt="avatar">
             </div>
