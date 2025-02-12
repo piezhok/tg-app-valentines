@@ -44,10 +44,7 @@ export default new createStore({
                 await commit('setSent', data.cards);
             }
         },
-        async getLetters({ commit }) {
-            const initData = window.Telegram.WebApp.initData
-            const userId = JSON.parse(params.get("user")).id;
-            const params = new URLSearchParams(initData);
+        async getLetters({ commit }, userId, initData) {
             const response = await axios.get('https://saharvnor.me:5000/api/cards/', {
                 params: {
                     "user_id": userId,
