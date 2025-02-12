@@ -44,7 +44,7 @@ export default new createStore({
                 await commit('setSent', data.cards);
             }
         },
-        async getLetters({ commit }, userId, initData) {
+        async getLetters({ commit }, [userId, initData]) {
             const response = await axios.get(`https://saharvnor.me:5000/api/cards/?user_id=${userId}&telegram_init_data=${initData}`, {
                 headers: {
                     "accept": "application/json"
