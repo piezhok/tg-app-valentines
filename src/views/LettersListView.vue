@@ -39,11 +39,11 @@ const getAvatar = (letterslist, i) => {
 
 <template>
     <div class="inner list">
-        <router-link v-for="n in receivedJson.value.length" :key="'letter'+n" :to="'/received/'+n">
+        <router-link v-for="n in receivedJson.length" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
                 <img :src="getAvatar(receivedJson, n)" alt="avatar">
             </div>
-            <div class="sender-name">{{ `${getUserValue(receivedJson.value, n-1, "first_name")} ${getUserValue(receivedJson.value, n-1, "last_name")}` }}</div>
+            <div class="sender-name">{{ `${getUserValue(receivedJson, n-1, "first_name")} ${getUserValue(receivedJson, n-1, "last_name")}` }}</div>
         </router-link>
     </div>
 </template>
