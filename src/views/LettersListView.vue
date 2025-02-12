@@ -18,6 +18,7 @@ const usersJson = ref();
 watch(() => route.fullPath, (toPath) => {
     if (toPath == "/received") {
         listJson.value = store.state.received;
+        console.log(listJson.value);
     } else if (toPath == "/sent") {
         listJson.value = store.state.sent;
     }
@@ -25,16 +26,16 @@ watch(() => route.fullPath, (toPath) => {
 }, { immediate: true });
 
 
-const getUserValue = computed(() => (i, value) => {
-    const user = usersJson.value.find(user => user.sender_telegram_id == listJson.value[i].sender_telegram_id)
+const getUserValue = computed(() => (object, i, value) => {
+    const user = object.value.find(user => user.sender_telegram_id == listJson.value[i].sender_telegram_id)
     return user[value];
 })
 
-const getAvatar = computed(() => (i) => {
+const getAvatar = computed(() => (object, i) => {
     if (listJson.value[i]["anonymous"] === true) {
         return "@/assets/anon.svg";
     } else {
-        return getUserValue(i, "photo_url");
+        return getUserValue(object, i, "photo_url");
     }
 })
 
@@ -44,9 +45,9 @@ const getAvatar = computed(() => (i) => {
     <div class="inner list">
         <router-link v-for="n in listJson.length" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
-                <img :src="getAvatar(n)" alt="avatar">
+                <img :src="getAvatar(usersJson, n)" alt="avatar">
             </div>
-            <div class="sender-name">{{ `${getUserValue(n-1, "first_name")} ${getUserValue(n-1, "last_name")}` }}</div>
+            <div class="sender-name">{{ `${getUserValue(usersJson, n-1, "first_name")} ${getUserValue(usersJson, n-1, "last_name")}` }}</div>
         </router-link>
     </div>
 </template>
