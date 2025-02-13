@@ -32,6 +32,7 @@ watch(() => route.fullPath, (toPath, fromPath) => {
         lowestLetter.value = 2;
     } else if (to.split("/")[2] != undefined) {
         const type = to.split("/")[1];
+        console.log(type);
         const id = parseInt(to.split("/")[2]);
 
         if (from.split("/")[2] == undefined) {           // from list to letter
@@ -124,7 +125,7 @@ const rotateWheel = (isToNext = true) => {
         rotation.value += 90;
     }
     opacity.value = 0;
-    temp = 0
+    temp = 0;
 }
 
 let touchStartX = 0;
