@@ -1,17 +1,30 @@
 <script setup>
-import {computed} from "vue";
+import {computed, ref, watch} from "vue";
 import {useStore} from "vuex";
-// import {useRoute} from "vue-router";
+import anonImg from "@/assets/anon.svg";
+import {useRoute} from "vue-router";
 
-// const route = useRoute();
+const route = useRoute();
 const store = useStore();
-const receivedJson = computed(() => {
-    return store.state.received;
+const lettersJson = ref()
+watch(() => route.fullPath, (toPath) => {
+    if (toPath == "/received") {
+        lettersJson.value = store.state.received;
+    } else if (toPath == "/sent") {
+        lettersJson.value = store.state.sent;
+    } console.log("lettersJson", lettersJson.value);
 })
+// const lettersJson = computed(() => {
+//     if (route.fullPath == "/received") {
+//         return store.state.received;
+//     } else if (route.fullPath == "/sent") {
+//         return store.state.sent;
+//     }
+// })
 const usersJson = computed(() => {
     return store.state.users;
 })
-const receivedLength = computed(() => {
+const lettersLength = computed(() => {
     return store.state.received.length;
 })
 
@@ -25,7 +38,7 @@ const getUserValue = (letterslist, i, value) => {
 const getAvatar = (letterslist, i) => {
     console.log("getAvatar", letterslist[i]["anonymous"]);
     if (letterslist[i]["anonymous"] === true) {
-        return "src/assets/anon.svg";
+        return anonImg;
     } else {
         return getUserValue(letterslist, i, "photo_url");
     }
@@ -35,11 +48,13 @@ const getAvatar = (letterslist, i) => {
 
 <template>
     <div class="inner list">
-        <router-link v-for="n in receivedLength" :key="'letter'+n" :to="'/received/'+n">
+        <router-link v-for="n in lettersLength" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
-                <img :src="getAvatar(receivedJson, n-1)" alt="avatar">
+                <img :src="getAvatar(lettersJson, n-1)" alt="avatar">
             </div>
-            <div class="sender-name">{{ `${getUserValue(receivedJson, n-1, "first_name")} ${getUserValue(receivedJson, n-1, "last_name")}` }}</div>
+            <div class="sender-name">{{
+                    `${getUserValue(lettersJson, n - 1, "first_name")} ${getUserValue(lettersJson, n - 1, "last_name")}`
+                }}</div>
         </router-link>
     </div>
 </template>
