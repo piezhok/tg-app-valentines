@@ -9,9 +9,9 @@ const usersJson = computed(() => {
     return store.state.users;
 })
 const currentPage = computed(() => {
-    if (route.fullPath == "/received") {
+    if (route.fullPath.includes("/received")) {
         return store.state.received;
-    } else if (route.fullPath == "/sent") {
+    } else if (route.fullPath.includes("/sent")) {
         return store.state.sent;
     } else return store.state.received;
 });
@@ -25,9 +25,9 @@ const getAnotherId = (i) => {
 }
 
 const getUserValue = (letterslist, i, value) => {
-    if (route.fullPath == "/received") {
+    if (route.fullPath.includes("/received")) {
         return usersJson.value.find(user => user.id == letterslist[i].sender_telegram_id)[value];
-    } else if (route.fullPath == "/sent") {
+    } else if (route.fullPath.includes("/sent")) {
         return usersJson.value.find(user => user.id == letterslist[i].receiver_telegram_id)[value];
     }
     return usersJson.value.find(user => user.id == letterslist[i].sender_telegram_id)[value];
@@ -57,7 +57,6 @@ const getName = (i) => {
             </div>
         </div>
         <div class="content">
-            {{ n }}
         </div>
     </div>
 </template>

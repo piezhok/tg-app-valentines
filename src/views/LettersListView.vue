@@ -56,11 +56,11 @@ const avatarName = ref([]);
 
 const getAvatar = (letterslist, i) => {
     if (route.fullPath == "/sent" || letterslist[i]["anonymous"] === false || getAnotherId(i) == currentPage.value[i]["sender_telegram_id"]) {
-        if (getUserValue(letterslist, i, "photo_url") != null) {
+        if (getUserValue(letterslist, i, "photo_url") !== null) {
             avatarName.value[i] = null;
             return getUserValue(letterslist, i, "photo_url");
         }
-        else {
+        else if (getUserValue(letterslist, i, "photo_url") === null) {
             avatarName.value[i] = getUserValue(currentPage.value, i, "first_name")[0];
             return 0;
         }
