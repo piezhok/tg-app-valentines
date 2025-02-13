@@ -35,30 +35,11 @@ const lettersLength = computed(() => {
 })
 
 const anotherPage = computed(() => {
-    if (route.fullPath == "/received") {
-        return store.state.sent;
-    } else if (route.fullPath == "/sent") {
-        return store.state.received;
-    } else return store.state.sent;
-});
-const currentName = computed(() => {
-    if (route.fullPath == "/received") {
-        return "sender_telegram_id";
-    } else if (route.fullPath == "/sent") {
-        return "receiver_telegram_id";
-    } else return "sender_telegram_id";
-});
-const anotherName = computed(() => {
-    if (route.fullPath == "/received") {
-        return "receiver_telegram_id";
-    } else if (route.fullPath == "/sent") {
-        return "sender_telegram_id";
-    } else return "receiver_telegram_id";
+    return store.state.sent;
 });
 
 const getAnotherId = (i) => {
-    const userId = anotherPage.value.find(letter => letter[anotherName.value] == currentPage.value[i][currentName.value])[anotherName.value];
-    console.log(userId);
+    const userId = anotherPage.value.find(letter => letter["receiver_telegram_id"] == currentPage.value[i]["sender_telegram_id"])["sender_telegram_id"];
     return userId;
 }
 
@@ -68,7 +49,7 @@ const getUserValue = (letterslist, i, value) => {
 }
 
 const getAvatar = (letterslist, i) => {
-    if (letterslist[i]["anonymous"] === false || getAnotherId(i) == currentPage.value[i][currentName.value]) {
+    if (letterslist[i]["anonymous"] === false || getAnotherId(i) == currentPage.value[i]["sender_telegram_id"]) {
         return getUserValue(letterslist, i, "photo_url");
     } else {
         return anonImg;
