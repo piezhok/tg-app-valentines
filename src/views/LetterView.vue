@@ -34,8 +34,11 @@ const getUserValue = (letterslist, i, value) => {
 }
 
 const getName = (i) => {
-    if (route.fullPath == "/sent" || getAnotherId(i) == currentPage.value[i]["sender_telegram_id"]) {
-        return `${getUserValue(currentPage.value, i, "first_name")} ${getUserValue(currentPage.value, i, "last_name")}`;
+    if (route.fullPath.includes("/sent") || getAnotherId(i) == currentPage.value[i]["sender_telegram_id"]) {
+        if (getUserValue(currentPage.value, i, "last_name") === null)
+            return `${getUserValue(currentPage.value, i, "first_name")}`;
+        else
+            return `${getUserValue(currentPage.value, i, "first_name")} ${getUserValue(currentPage.value, i, "last_name")}`;
     } else {
         return "Аноним"
     }

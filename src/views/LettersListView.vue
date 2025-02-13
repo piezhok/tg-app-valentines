@@ -54,9 +54,11 @@ const getUserValue = (letterslist, i, value) => {
 
 const getAvatar = (letterslist, i) => {
     if (route.fullPath == "/sent" || letterslist[i]["anonymous"] === false || getAnotherId(i) == currentPage.value[i]["sender_telegram_id"]) {
-        return getUserValue(letterslist, i, "photo_url");
+        if (getUserValue(letterslist, i, "photo_url") != null)
+            return `<img :src="${getUserValue(letterslist, i, "photo_url")}" alt="avatar">`;
+        else return `<span>{{ getUserValue(currentPage.value, i, "first_name")[0] }}</span>`;
     } else {
-        return anonImg;
+        return `<img :src="${anonImg}" alt="avatar">`;
     }
 }
 
@@ -76,9 +78,9 @@ const getName = (i) => {
 <template>
     <div class="inner list">
         <router-link v-for="n in lettersLength" :key="'letter'+n" :to="`${$route.fullPath}/${n}`">
-            <div class="avatar">
-                <img :src="getAvatar(currentPage, n-1)" alt="avatar">
+            <div class="avatar" v-html="getAvatar(n-1)">
             </div>
+<!--                <img :src="getAvatar(currentPage, n-1)" alt="avatar">-->
             <div class="sender-name">{{ getName(n-1) }}
             </div>
         </router-link>
