@@ -52,7 +52,7 @@ async function submitForm() {
     try {
         const response = await axios.post('https://saharvnor.me:5000/api/cards', {
             "telegram_init_data": await window.Telegram.WebApp.initData,
-            "sender_telegram_id":  JSON.parse(new URLSearchParams(await window.Telegram.WebApp.initData)).id,
+            "sender_telegram_id":  JSON.parse(new URLSearchParams(await window.Telegram.WebApp.initData).get("user")).id,
             "receiver_telegram_username": receiverId.value.replaceAll("@", ""),
             "message": message.value,
             "created_at": Math.floor(new Date().getTime()/1000),
