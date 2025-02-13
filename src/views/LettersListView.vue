@@ -61,7 +61,7 @@ const getAvatar = (letterslist, i) => {
 }
 
 const getName = (i) => {
-    if (getAnotherId(i) == currentPage.value[i]["sender_telegram_id"]) {
+    if (route.fullPath == "/sent" || getAnotherId(i) == currentPage.value[i]["sender_telegram_id"]) {
         if (getUserValue(currentPage.value, i, "last_name") === null)
             return `${getUserValue(currentPage.value, i, "first_name")}`;
         else
