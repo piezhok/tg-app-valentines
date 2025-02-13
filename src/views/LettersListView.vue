@@ -79,7 +79,7 @@ const getAvatar = (letterslist, i) => {
 
 <template>
     <div class="inner list">
-        <router-link v-for="n in lettersLength" :key="'letter'+n" :to="'/received/'+n">
+        <router-link v-for="n in lettersLength" :key="'letter'+n" :to="`${$route.path}/${n}`">
             <div class="avatar">
                 <img :src="getAvatar(currentPage, n-1)" alt="avatar">
             </div>
