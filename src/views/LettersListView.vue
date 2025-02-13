@@ -21,7 +21,7 @@ watch(() => route.fullPath, (toPath) => {
         currentPage.value = receivedJson.value;
     } else if (toPath == "/sent") {
         currentPage.value = sentJson.value;
-    }
+    } console.log("currentPage", currentPage.value);
 })
 const usersJson = computed(() => {
     return store.state.users;
@@ -31,14 +31,11 @@ const lettersLength = computed(() => {
 })
 
 const getUserValue = (letterslist, i, value) => {
-    console.log(usersJson.value);
     const user = usersJson.value.find(user => user.id == letterslist[i].sender_telegram_id)
-    console.log("user", user)
     return user[value];
 }
 
 const getAvatar = (letterslist, i) => {
-    console.log("getAvatar", letterslist[i]["anonymous"]);
     if (letterslist[i]["anonymous"] === true) {
         return anonImg;
     } else {

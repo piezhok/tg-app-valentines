@@ -57,7 +57,6 @@ watch(() => route.fullPath, (toPath, fromPath) => {
                     //     startElements.value.push((idIndex-i) % quantity.value)
                     startElements.value.push((idIndex+i) % quantity.value);
             }
-            console.log(startElements.value);
             lowestLetterNum.value = startElements.value[2];
         }
         // const idIndex = json.value.indexOf(id);
@@ -104,7 +103,6 @@ const rotateWheel = (isToNext = true) => {
         // currentLetter.value = subtractNum(currentLetter.value);
         lowestLetterNum.value = addNum(startElements.value[currentLetter.value], quantity.value);
         startElements.value.splice(lowestLetter.value, 1, lowestLetterNum.value);
-        console.log(startElements.value);
         lowestLetter.value = addNum(lowestLetter.value);
         // lowestLetter.value = subtractNum(lowestLetter.value);
         rotation.value -= temp;
@@ -117,7 +115,6 @@ const rotateWheel = (isToNext = true) => {
         startElements.value.splice(lowestLetter.value, 1, lowestLetterNum.value);
         lowestLetter.value = subtractNum(lowestLetter.value);
         // lowestLetter.value = addNum(lowestLetter.value);
-        console.log(startElements.value);
         // if (lowestLetterNum.value < 0) {
         //     lowestLetterNum.value = quantity.value-1;
         // }
