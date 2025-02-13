@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios';
-import {onMounted, ref} from "vue";
+import {ref} from "vue";
 import {useRouter} from "vue-router";
 const addAt = (event) => {
     const input = event.target;
@@ -22,9 +22,6 @@ const router = useRouter();
 // const userInfo = ref();
 // const senderId = ref();
 
-const initData = window.Telegram.WebApp.initData;
-const params = new URLSearchParams(initData);
-const userId = JSON.parse(params.get("user")).id;
 
 // const formData = ref({
 //     telegram_init_data: initData,
@@ -34,8 +31,11 @@ const userId = JSON.parse(params.get("user")).id;
 //     created_at: 0,
 //     anonymous: true
 // });
-onMounted(() => {
-})
+// onMounted(async () => {
+//     const initData = await window.Telegram.WebApp.initData;
+//     const params = new URLSearchParams(initData);
+//     const userId = JSON.parse(params.get("user")).id;
+// })
 
 const removeAt = (event) => {
     const input = event.target;
@@ -51,8 +51,8 @@ const anonymous = ref(true);
 async function submitForm() {
     try {
         const response = await axios.post('https://saharvnor.me:5000/api/cards', {
-            "telegram_init_data": window.Telegram.WebApp.initData,
-            "sender_telegram_id": userId,
+            "telegram_init_data": await window.Telegram.WebApp.initData,
+            "sender_telegram_id":  JSON.parse(new URLSearchParams(await window.Telegram.WebApp.initData)).id,
             "receiver_telegram_username": receiverId.value.replaceAll("@", ""),
             "message": message.value,
             "created_at": Math.floor(new Date().getTime()/1000),
