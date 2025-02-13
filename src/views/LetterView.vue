@@ -1,4 +1,59 @@
 <script setup>
+import {computed} from "vue";
+import {useRoute} from "vue-router";
+import {useStore} from "vuex";
+
+const route = useRoute();
+const store = useStore();
+// const usersJson = computed(() => {
+//     return store.state.users;
+// })
+const currentPage = computed(() => {
+    if (route.fullPath == "/received") {
+        return store.state.received;
+    } else if (route.fullPath == "/sent") {
+        return store.state.sent;
+    } else return store.state.received;
+});
+const anotherPage = computed(() => {
+    if (route.fullPath == "/received") {
+        return store.state.sent;
+    } else if (route.fullPath == "/sent") {
+        return store.state.received;
+    } else return store.state.sent;
+});
+const currentName = computed(() => {
+    if (route.fullPath == "/received") {
+        return "sender_telegram_id";
+    } else if (route.fullPath == "/sent") {
+        return "receiver_telegram_id";
+    } else return "sender_telegram_id";
+});
+const anotherName = computed(() => {
+    if (route.fullPath == "/received") {
+        return "receiver_telegram_id";
+    } else if (route.fullPath == "/sent") {
+        return "sender_telegram_id";
+    } else return "receiver_telegram_id";
+});
+
+const getAnotherId = (i) => {
+    const userId = anotherPage.value.find(letter => letter[anotherName.value] == currentPage.value[i][currentName.value]);
+    return userId;
+}
+
+// const getUserValue = (letterslist, i, value) => {
+//     const user = usersJson.value.find(user => user.id == letterslist[i].sender_telegram_id);
+//     return user[value];
+// }
+
+const getName = (i) => {
+    if (getAnotherId(i) == currentPage.value[i][currentName.value]) {
+        return currentPage.value[i][currentName.value];
+    } else {
+        return "Аноним"
+    }
+}
 </script>
 
 <template>
@@ -7,7 +62,7 @@
             <router-link to="/received" class="back-button">
                 <span>&lt;</span>
             </router-link>
-            <div class="username">@piezhok</div>
+            <div class="username">{{ getName($route.params.id-1) }}</div>
             <div class="delete-button">
                 <span>🗑</span>
             </div>

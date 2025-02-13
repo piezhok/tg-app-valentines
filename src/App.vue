@@ -4,7 +4,6 @@ import LettersWheel from "@/components/LettersWheel.vue";
 import {useStore} from "vuex";
 import {computed, onBeforeMount} from "vue";
 import axios from 'axios';
-import {onBeforeRouteUpdate} from "vue-router";
 
 const store = useStore();
 // const initData = computed(() => {
@@ -65,13 +64,6 @@ onBeforeMount(async () => {
 const quantity = computed( () => {
     return store.state.received.length
 });
-onBeforeRouteUpdate(async (to) => {
-    if (to == "/received") {
-        quantity.value = store.state.received.length;
-    } else if (to == "/sent") {
-        quantity.value = store.state.sent.length;
-    }
-})
 </script>
 
 <template>
