@@ -10,6 +10,7 @@ const lowestLetter = ref(2);
 const lowestLetterNum = ref();
 const rotation = ref(0);
 const opacity = ref(0);
+const path = ref("received");
 let angle = 0;
 let temp = 0;
 const isDragging = ref(false);
@@ -38,6 +39,7 @@ watch(() => route.fullPath, (toPath, fromPath) => {
             // currentLetter.value = 0;
             // lowestLetter.value = 2;
             json.value = type == 'received'?state.value.received:state.value.sent;
+            path.value = type == 'received' ? 'received' : 'sent';
             quantity.value = json.value.length ? json.value.length : 0;
             const idIndex = json.value.findIndex(letter => letter.id == id);
             startElements.value = [];
@@ -98,7 +100,7 @@ const rotateWheel = (isToNext = true) => {
         // if (currentLetter.value < 0) {
         //     currentLetter.value = 3;
         // }
-        router.push(`/received/${addNum(parseInt(route.params.id), quantity.value, true)}`);
+        router.push(`/${path.value}/${addNum(parseInt(route.params.id), quantity.value, true)}`);
         currentLetter.value = addNum(currentLetter.value);
         // currentLetter.value = subtractNum(currentLetter.value);
         lowestLetterNum.value = addNum(startElements.value[currentLetter.value], quantity.value);
@@ -108,7 +110,7 @@ const rotateWheel = (isToNext = true) => {
         rotation.value -= temp;
         rotation.value += -90;
     } else {
-        router.push(`/received/${subtractNum(parseInt(route.params.id), quantity.value, true)}`);
+        router.push(`/${path.value}/${subtractNum(parseInt(route.params.id), quantity.value, true)}`);
         currentLetter.value = subtractNum(currentLetter.value);
         // currentLetter.value = addNum(currentLetter.value);
         lowestLetterNum.value = subtractNum(startElements.value[currentLetter.value], quantity.value);
