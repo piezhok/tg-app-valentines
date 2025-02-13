@@ -232,7 +232,7 @@ const mouseUp = (event) => {
 
 <style scoped lang="scss">
     .wheel_container {
-        position: sticky;
+        position: absolute;
         //overflow: hidden;
         display: flex;
         justify-content: center;

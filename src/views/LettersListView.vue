@@ -20,7 +20,7 @@ watch(() => route.fullPath, (toPath) => {
     if (toPath == "/received") {
         currentPage.value = receivedJson.value;
     } else if (toPath == "/sent") {
-        receivedJson.value = sentJson.value;
+        currentPage.value = sentJson.value;
     }
 })
 const usersJson = computed(() => {
