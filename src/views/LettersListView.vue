@@ -78,7 +78,7 @@ const getName = (i) => {
 <template>
     <div class="inner list">
         <router-link v-for="n in lettersLength" :key="'letter'+n" :to="`${$route.fullPath}/${n}`">
-            <div class="avatar" v-html="getAvatar(n-1)">
+            <div class="avatar" :v-html="getAvatar(n-1)">
             </div>
 <!--                <img :src="getAvatar(currentPage, n-1)" alt="avatar">-->
             <div class="sender-name">{{ getName(n-1) }}
