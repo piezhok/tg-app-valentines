@@ -76,9 +76,9 @@ const quantity = computed( () => {
     <div class="main-card glass" :class="{'list-container': $route.fullPath == '/received'||$route.fullPath == '/sent'}">
         <RouterView v-slot="{ Component }">
             <Transition :name="$route.meta.transition" mode="out-in">
-                 <KeepAlive>
+<!--                 <KeepAlive>-->
                     <component :key="$route.fullPath" :is="Component"></component>
-                 </KeepAlive>
+<!--                 </KeepAlive>-->
             </Transition>
         </RouterView>
     </div>
