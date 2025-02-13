@@ -53,9 +53,9 @@ async function submitForm() {
         const response = await axios.post('https://saharvnor.me:5000/api/cards', {
             "telegram_init_data": initData,
             "sender_telegram_id": userId,
-            "receiver_telegram_username": "otodna",
+            "receiver_telegram_username": receiverId.value.replaceAll("@", ""),
             "message": message.value,
-            "created_at": 0,
+            "created_at": new Date().getTime()/1000,
             "anonymous": anonymous.value,
             "color": 0,
             "background_emoji": 0
@@ -67,8 +67,8 @@ async function submitForm() {
                 "accept": "application/json"
             }
         });
-        console.log('Form submitted successfully', response);
         router.to = "/sent";
+        console.log('Form submitted successfully', response);
     } catch (error) {
         console.error('Error submitting form', error);
     }
