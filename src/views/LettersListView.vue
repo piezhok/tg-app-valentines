@@ -60,6 +60,17 @@ const getAvatar = (letterslist, i) => {
     }
 }
 
+const getName = (i) => {
+    if (getAnotherId(i) == currentPage.value[i]["sender_telegram_id"]) {
+        if (getUserValue(currentPage.value, i, "last_name") === null)
+            return `${getUserValue(currentPage.value, i, "first_name")}`;
+        else
+            return `${getUserValue(currentPage.value, i, "first_name")} ${getUserValue(currentPage.value, i, "last_name")}`;
+    } else {
+        return "Аноним"
+    }
+}
+
 </script>
 
 <template>
@@ -68,9 +79,7 @@ const getAvatar = (letterslist, i) => {
             <div class="avatar">
                 <img :src="getAvatar(currentPage, n-1)" alt="avatar">
             </div>
-            <div class="sender-name">{{
-                    `${getUserValue(currentPage, n - 1, "first_name")} ${getUserValue(currentPage, n - 1, "last_name")}`
-                }}
+            <div class="sender-name">{{ getName(n-1) }}
             </div>
         </router-link>
     </div>
