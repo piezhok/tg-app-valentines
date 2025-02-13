@@ -13,7 +13,9 @@ const receivedJson = computed(() => {
 const sentJson = computed(() => {
     return store.state.sent;
 })
-const currentPage = ref(receivedJson.value);
+const currentPage = computed(() => {
+    return store.state.received
+});
 watch(() => route.fullPath, (toPath) => {
     if (toPath == "/received") {
         currentPage.value = receivedJson.value;
