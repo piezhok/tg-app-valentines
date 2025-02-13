@@ -8,6 +8,14 @@
         <title><%= htmlWebpackPlugin.options.title %></title>
         <script src="https://github.com/wwwtyro/cryptico/blob/master/cryptico.js"></script>
         <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+        <script>
+            // let h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+            function adjustHeight() {
+                document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+            }
+            window.addEventListener('resize', adjustHeight);
+            adjustHeight();
+        </script>
         <style type="text/css">
             :root {
                 --main: rgba(31, 31, 33, 0.8);
@@ -34,7 +42,7 @@
                 -moz-user-select: none; /* Для Firefox */
                 -ms-user-select: none; /* Для IE/Edge */
                 width: 100%;
-                height: 100dvh;
+                height: var(--app-height);
                 //min-height: 100vh;
                 margin: 0;
                 padding: 0;
