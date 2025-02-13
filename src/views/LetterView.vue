@@ -39,6 +39,7 @@ const anotherName = computed(() => {
 
 const getAnotherId = (i) => {
     const userId = anotherPage.value.find(letter => letter[anotherName.value] == currentPage.value[i][currentName.value]);
+    console.log(userId);
     return userId;
 }
 
