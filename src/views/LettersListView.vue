@@ -111,6 +111,12 @@ a {
         height: 4.875rem;
         background-color: #B1244A;
         border-radius: 100rem;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+        }
     }
 }
 
