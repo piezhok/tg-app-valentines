@@ -20,7 +20,7 @@ const anotherPage = computed(() => {
 });
 
 const getAnotherId = (i) => {
-    const userId = anotherPage.value.find(letter => letter["receiver_telegram_id"] == currentPage.value[i]["sender_telegram_id"])["sender_telegram_id"];
+    const userId = anotherPage.value.find(letter => letter["receiver_telegram_id"] == currentPage.value[i]["sender_telegram_id"])["receiver_telegram_id"];
     return userId;
 }
 
