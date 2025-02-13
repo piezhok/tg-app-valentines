@@ -2,12 +2,11 @@
 import NavBar from "@/components/NavBar.vue";
 import LettersWheel from "@/components/LettersWheel.vue";
 import {useStore} from "vuex";
-import {computed, onBeforeMount, watch} from "vue";
+import {computed, onBeforeMount} from "vue";
 import axios from 'axios';
-import {useRoute} from "vue-router";
+import {onBeforeRouteUpdate} from "vue-router";
 
 const store = useStore();
-const route = useRoute();
 // const initData = computed(() => {
 //     return store.state.initData;
 // })
@@ -66,10 +65,10 @@ onBeforeMount(async () => {
 const quantity = computed( () => {
     return store.state.received.length
 });
-watch(() => route.fullPath, (toPath) => {
-    if (toPath == "/received") {
+onBeforeRouteUpdate(async (to) => {
+    if (to == "/received") {
         quantity.value = store.state.received.length;
-    } else if (toPath == "/sent") {
+    } else if (to == "/sent") {
         quantity.value = store.state.sent.length;
     }
 })
