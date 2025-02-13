@@ -6,28 +6,26 @@ import {useRoute} from "vue-router";
 
 const route = useRoute();
 const store = useStore();
-const lettersJson = ref()
+// const lettersJson = ref()
+const receivedJson = computed(() => {
+    return store.state.received;
+})
+const sentJson = computed(() => {
+    return store.state.sent;
+})
+const currentPage = ref(receivedJson.value);
 watch(() => route.fullPath, (toPath) => {
     if (toPath == "/received") {
-        lettersJson.value = store.state.received;
+        currentPage.value = receivedJson.value;
     } else if (toPath == "/sent") {
-        lettersJson.value = store.state.sent;
-    } else
-        lettersJson.value = store.state.received;
-    console.log("lettersJson", lettersJson.value);
+        receivedJson.value = sentJson.value;
+    }
 })
-// const lettersJson = computed(() => {
-//     if (route.fullPath == "/received") {
-//         return store.state.received;
-//     } else if (route.fullPath == "/sent") {
-//         return store.state.sent;
-//     } return store.state.received;
-// })
 const usersJson = computed(() => {
     return store.state.users;
 })
 const lettersLength = computed(() => {
-    return store.state.received.length;
+    return currentPage.value.length;
 })
 
 const getUserValue = (letterslist, i, value) => {
@@ -52,10 +50,10 @@ const getAvatar = (letterslist, i) => {
     <div class="inner list">
         <router-link v-for="n in lettersLength" :key="'letter'+n" :to="'/received/'+n">
             <div class="avatar">
-                <img :src="getAvatar(lettersJson, n-1)" alt="avatar">
+                <img :src="getAvatar(currentPage, n-1)" alt="avatar">
             </div>
             <div class="sender-name">{{
-                    `${getUserValue(lettersJson, n - 1, "first_name")} ${getUserValue(lettersJson, n - 1, "last_name")}`
+                    `${getUserValue(currentPage, n - 1, "first_name")} ${getUserValue(currentPage, n - 1, "last_name")}`
                 }}</div>
         </router-link>
     </div>
