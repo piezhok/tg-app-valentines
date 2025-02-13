@@ -33,7 +33,7 @@
         height: 4rem;
         width: 100%;
         padding: .875rem 0;
-        position: sticky;
+        position: fixed;
         bottom: 0;
         //right: 1rem;
         //left: 1rem;
