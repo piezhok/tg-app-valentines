@@ -60,4 +60,10 @@
             fill: white;
         }
     }
+
+    @media (max-height: 600px) {
+        .nav-bar_container {
+            display: none;
+        }
+    }
 </style>

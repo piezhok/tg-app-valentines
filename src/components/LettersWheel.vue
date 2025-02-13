@@ -402,9 +402,9 @@ const mouseUp = (event) => {
         }
     }
 
-    //@media (max-height: 600px) {
-    //    .wheel_container {
-    //        display: none;
-    //    }
-    //}
+    @media (max-height: 600px) {
+        .wheel_container {
+            display: none;
+        }
+    }
 </style>
