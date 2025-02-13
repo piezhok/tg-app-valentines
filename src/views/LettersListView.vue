@@ -1,5 +1,5 @@
 <script setup>
-import {computed, watch, ref} from "vue";
+import {computed, watch} from "vue";
 import {useStore} from "vuex";
 import anonImg from "@/assets/anon.svg";
 import {useRoute} from "vue-router";
