@@ -51,11 +51,11 @@ const anonymous = ref(true);
 async function submitForm() {
     try {
         const response = await axios.post('https://saharvnor.me:5000/api/cards', {
-            "telegram_init_data": initData,
+            "telegram_init_data": window.Telegram.WebApp.initData,
             "sender_telegram_id": userId,
             "receiver_telegram_username": receiverId.value.replaceAll("@", ""),
             "message": message.value,
-            "created_at": new Date().getTime()/1000,
+            "created_at": Math.floor(new Date().getTime()/1000),
             "anonymous": anonymous.value,
             "color": 0,
             "background_emoji": 0
