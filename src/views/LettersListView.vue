@@ -15,10 +15,11 @@ const store = useStore();
 // })
 const currentPage = computed(() => {
     if (route.fullPath == "/received") {
+        console.log("bruh");
         return store.state.received;
     } else if (route.fullPath == "/sent") {
         return store.state.sent;
-    } else return store.state.received;
+    } else return store.state.sent;
 });
 // watch(() => route.fullPath, (toPath) => {
 //     if (toPath == "/received") {
