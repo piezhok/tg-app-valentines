@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 // import Received from '../views/ReceivedView.vue'
 import LettersList from '../views/LettersListView.vue'
 import Letter from '../views/LetterView.vue'
-import Sent from '../views/SentView.vue'
+// import Sent from '../views/SentView.vue'
 import New from '../views/NewView.vue'
 
 const routes = [
@@ -17,7 +17,7 @@ const routes = [
     }, {
         path: '/sent',
         name: 'sent',
-        component: Sent
+        component: LettersList
     },
     {
         path: '/sent/:id(\\d+)',
