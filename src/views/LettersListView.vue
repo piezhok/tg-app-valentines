@@ -1,5 +1,5 @@
 <script setup>
-import {computed, watch} from "vue";
+import {computed} from "vue";
 import {useStore} from "vuex";
 import anonImg from "@/assets/anon.svg";
 import {useRoute} from "vue-router";
@@ -14,15 +14,19 @@ const store = useStore();
 //     return store.state.sent;
 // })
 const currentPage = computed(() => {
-    return store.state.received
+    if (route.fullPath == "/received") {
+        return store.state.received;
+    } else if (route.fullPath == "/sent") {
+        return store.state.sent;
+    } else return store.state.received;
 });
-watch(() => route.fullPath, (toPath) => {
-    if (toPath == "/received") {
-        currentPage.value = store.state.received;
-    } else if (toPath == "/sent") {
-        currentPage.value = store.state.sent;
-    } console.log("currentPage", currentPage.value);
-})
+// watch(() => route.fullPath, (toPath) => {
+//     if (toPath == "/received") {
+//         currentPage.value = store.state.received;
+//     } else if (toPath == "/sent") {
+//         currentPage.value = store.state.sent;
+//     } console.log("currentPage", currentPage.value);
+// })
 const usersJson = computed(() => {
     return store.state.users;
 })
