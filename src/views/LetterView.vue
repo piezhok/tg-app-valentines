@@ -25,8 +25,12 @@ const getAnotherId = (i) => {
 }
 
 const getUserValue = (letterslist, i, value) => {
-    const user = usersJson.value.find(user => user.id == letterslist[i].sender_telegram_id);
-    return user[value];
+    if (route.fullPath == "/received") {
+        return usersJson.value.find(user => user.id == letterslist[i].sender_telegram_id)[value];
+    } else if (route.fullPath == "/sent") {
+        return usersJson.value.find(user => user.id == letterslist[i].receiver_telegram_id)[value];
+    }
+    return usersJson.value.find(user => user.id == letterslist[i].sender_telegram_id)[value];
 }
 
 const getName = (i) => {
