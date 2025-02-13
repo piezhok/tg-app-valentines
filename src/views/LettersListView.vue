@@ -7,20 +7,20 @@ import {useRoute} from "vue-router";
 const route = useRoute();
 const store = useStore();
 // const lettersJson = ref()
-const receivedJson = computed(() => {
-    return store.state.received;
-})
-const sentJson = computed(() => {
-    return store.state.sent;
-})
+// const receivedJson = computed(() => {
+//     return store.state.received;
+// })
+// const sentJson = computed(() => {
+//     return store.state.sent;
+// })
 const currentPage = computed(() => {
     return store.state.received
 });
 watch(() => route.fullPath, (toPath) => {
     if (toPath == "/received") {
-        currentPage.value = receivedJson.value;
+        currentPage.value = store.state.received;
     } else if (toPath == "/sent") {
-        currentPage.value = sentJson.value;
+        currentPage.value = store.state.sent;
     } console.log("currentPage", currentPage.value);
 })
 const usersJson = computed(() => {
