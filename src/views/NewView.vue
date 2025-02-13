@@ -99,10 +99,6 @@ async function submitForm() {
                     <input type="radio" id="anon2" name="anonymous" v-model="anonymous" value=false>
                     <label for="anon2">Открыто</label>
                 </div>
-                <div class="anon-radio">
-                    <input type="radio" id="anon3" name="anonymous" v-model="anonymous" value="" disabled>
-                    <label for="anon3">Тайно</label>
-                </div>
             </div>
         </div>
         <div class="btn-container">

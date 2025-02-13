@@ -201,7 +201,7 @@ const mouseUp = (event) => {
 </script>
 
 <template>
-    <div class="wheel_container" :class="{mini: $route.path == '/received', new: $route.path == '/new', single: quantity === 1}">
+    <div class="wheel_container" :class="{mini: $route.path == '/received' || $route.path == '/sent', new: $route.path == '/new', single: quantity === 1}">
         <div class="wheel_wrapper" :style="{transform: `rotate(${rotation}deg)`}"
              @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd"
              @touchcancel="touchEnd"
