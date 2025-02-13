@@ -1,26 +1,28 @@
 <script setup>
-import {computed} from "vue";
+import {computed, watch, ref} from "vue";
 import {useStore} from "vuex";
 import anonImg from "@/assets/anon.svg";
 import {useRoute} from "vue-router";
 
 const route = useRoute();
 const store = useStore();
-// const lettersJson = ref()
-// watch(() => route.fullPath, (toPath) => {
-//     if (toPath == "/received") {
-//         lettersJson.value = store.state.received;
-//     } else if (toPath == "/sent") {
-//         lettersJson.value = store.state.sent;
-//     } console.log("lettersJson", lettersJson.value);
-// })
-const lettersJson = computed(() => {
-    if (route.fullPath == "/received") {
-        return store.state.received;
-    } else if (route.fullPath == "/sent") {
-        return store.state.sent;
-    } return store.state.received;
+const lettersJson = ref()
+watch(() => route.fullPath, (toPath) => {
+    if (toPath == "/received") {
+        lettersJson.value = store.state.received;
+    } else if (toPath == "/sent") {
+        lettersJson.value = store.state.sent;
+    } else
+        lettersJson.value = store.state.received;
+    console.log("lettersJson", lettersJson.value);
 })
+// const lettersJson = computed(() => {
+//     if (route.fullPath == "/received") {
+//         return store.state.received;
+//     } else if (route.fullPath == "/sent") {
+//         return store.state.sent;
+//     } return store.state.received;
+// })
 const usersJson = computed(() => {
     return store.state.users;
 })
