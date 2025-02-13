@@ -84,7 +84,7 @@ const getName = (i) => {
 
 <template>
     <div class="inner list">
-        <router-link v-for="n in lettersLength" :key="'letter'+n" :to="`${$route.fullPath}/${n}`">
+        <router-link v-for="n in lettersLength" :key="'letter'+n" :to="`${$route.path}/${n}`">
             <div class="avatar">
                 <img v-if="avatarName[n-1] == null" :src="getAvatar(currentPage, n-1)" alt="avatar">
                 <span v-if="avatarName[n-1] != null">{{ avatarName[n-1] }}</span>
