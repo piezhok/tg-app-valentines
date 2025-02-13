@@ -69,7 +69,7 @@ const getName = (i) => {
             </div>
         </div>
         <div class="content">
-            Lorem ipsum
+            {{ n }}
         </div>
     </div>
 </template>
