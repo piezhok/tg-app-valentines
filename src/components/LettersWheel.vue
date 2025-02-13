@@ -32,7 +32,6 @@ watch(() => route.fullPath, (toPath, fromPath) => {
         lowestLetter.value = 2;
     } else if (to.split("/")[2] != undefined) {
         const type = to.split("/")[1];
-        console.log(type);
         const id = parseInt(to.split("/")[2]);
 
         if (from.split("/")[2] == undefined) {           // from list to letter
@@ -42,7 +41,8 @@ watch(() => route.fullPath, (toPath, fromPath) => {
             json.value = type == 'received'?state.value.received:state.value.sent;
             path.value = type == 'received' ? 'received' : 'sent';
             quantity.value = json.value.length ? json.value.length : 0;
-            const idIndex = json.value.findIndex(letter => letter.id == id);
+            // const idIndex = json.value.findIndex(letter => letter.id == id);
+            const idIndex = id-1;
             startElements.value = [];
             for (let i = 0; i < 4; i++) {
                 if (i === 3) {
@@ -50,7 +50,7 @@ watch(() => route.fullPath, (toPath, fromPath) => {
                     if (idIndex-1 <= 0)
                         startElements.value.push(quantity.value-1);
                     else
-                        startElements.value.push((idIndex-1) % quantity.value)
+                        startElements.value.push((idIndex-1) % quantity.value);
                 } else
                     // if (idIndex-i < 0) {
                     //     startElements.value.push(quantity.value-i);
