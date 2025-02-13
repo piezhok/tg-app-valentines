@@ -5,9 +5,9 @@ import {useStore} from "vuex";
 
 const route = useRoute();
 const store = useStore();
-// const usersJson = computed(() => {
-//     return store.state.users;
-// })
+const usersJson = computed(() => {
+    return store.state.users;
+})
 const currentPage = computed(() => {
     if (route.fullPath == "/received") {
         return store.state.received;
@@ -43,14 +43,14 @@ const getAnotherId = (i) => {
     return userId;
 }
 
-// const getUserValue = (letterslist, i, value) => {
-//     const user = usersJson.value.find(user => user.id == letterslist[i].sender_telegram_id);
-//     return user[value];
-// }
+const getUserValue = (letterslist, i, value) => {
+    const user = usersJson.value.find(user => user.id == letterslist[i].sender_telegram_id);
+    return user[value];
+}
 
 const getName = (i) => {
     if (getAnotherId(i) == currentPage.value[i][currentName.value]) {
-        return currentPage.value[i][currentName.value];
+        return `${getUserValue(currentPage.value, i, "first_name")} ${getUserValue(currentPage.value, i, "last_name")}}`;
     } else {
         return "Аноним"
     }
