@@ -34,16 +34,44 @@ const lettersLength = computed(() => {
     return currentPage.value.length;
 })
 
+const anotherPage = computed(() => {
+    if (route.fullPath == "/received") {
+        return store.state.sent;
+    } else if (route.fullPath == "/sent") {
+        return store.state.received;
+    } else return store.state.sent;
+});
+const currentName = computed(() => {
+    if (route.fullPath == "/received") {
+        return "sender_telegram_id";
+    } else if (route.fullPath == "/sent") {
+        return "receiver_telegram_id";
+    } else return "sender_telegram_id";
+});
+const anotherName = computed(() => {
+    if (route.fullPath == "/received") {
+        return "receiver_telegram_id";
+    } else if (route.fullPath == "/sent") {
+        return "sender_telegram_id";
+    } else return "receiver_telegram_id";
+});
+
+const getAnotherId = (i) => {
+    const userId = anotherPage.value.find(letter => letter[anotherName.value] == currentPage.value[i][currentName.value])[anotherName.value];
+    console.log(userId);
+    return userId;
+}
+
 const getUserValue = (letterslist, i, value) => {
     const user = usersJson.value.find(user => user.id == letterslist[i].sender_telegram_id)
     return user[value];
 }
 
 const getAvatar = (letterslist, i) => {
-    if (letterslist[i]["anonymous"] === true) {
-        return anonImg;
-    } else {
+    if (letterslist[i]["anonymous"] === false || getAnotherId(i) == currentPage.value[i][currentName.value]) {
         return getUserValue(letterslist, i, "photo_url");
+    } else {
+        return anonImg;
     }
 }
 
@@ -57,7 +85,8 @@ const getAvatar = (letterslist, i) => {
             </div>
             <div class="sender-name">{{
                     `${getUserValue(currentPage, n - 1, "first_name")} ${getUserValue(currentPage, n - 1, "last_name")}`
-                }}</div>
+                }}
+            </div>
         </router-link>
     </div>
 </template>

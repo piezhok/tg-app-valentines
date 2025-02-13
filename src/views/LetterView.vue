@@ -50,7 +50,7 @@ const getUserValue = (letterslist, i, value) => {
 
 const getName = (i) => {
     if (getAnotherId(i) == currentPage.value[i][currentName.value]) {
-        return `${getUserValue(currentPage.value, i, "first_name")} ${getUserValue(currentPage.value, i, "last_name")}}`;
+        return `${getUserValue(currentPage.value, i, "first_name")} ${getUserValue(currentPage.value, i, "last_name")}`;
     } else {
         return "Аноним"
     }
