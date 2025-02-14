@@ -109,6 +109,7 @@ a {
     cursor: pointer;
     margin: 1.5rem 0;
     position: relative;
+    gap: 1rem;
 
     .avatar {
         width: 4.875rem;
