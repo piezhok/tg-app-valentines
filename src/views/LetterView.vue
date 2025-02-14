@@ -48,15 +48,16 @@ const getName = (i) => {
 <template>
     <div class="inner">
         <div class="header">
-            <router-link to="/received" class="back-button">
+            <router-link :to="`/${$route.fullPath.split('/')[1]}`" class="back-button">
                 <span>&lt;</span>
             </router-link>
             <div class="username">{{ getName($route.params.id-1) }}</div>
-            <div class="delete-button">
-                <span>🗑</span>
+            <div class="time-box">
+                <span>{{ currentPage.value[$route.params.id-1]["created_at"] }}</span>
             </div>
         </div>
         <div class="content">
+            {{ currentPage.value[$route.params.id-1]["message"] }}
         </div>
     </div>
 </template>
@@ -83,7 +84,7 @@ const getName = (i) => {
     background-color: rgba(68, 68, 68);
 }
 
-.back-button, .delete-button {
+.back-button, .time-box {
     cursor: pointer;
     opacity: 0.7;
 }
