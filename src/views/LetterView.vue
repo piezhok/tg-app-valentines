@@ -56,9 +56,9 @@ const getLetterValue = (i, key) => {
                 <span>&lt;</span>
             </router-link>
             <div class="username">{{ getName($route.params.id-1) }}</div>
-            <div class="time-box">
-                <span>{{ getLetterValue($route.params.id-1, "created_at") }}</span>
-            </div>
+<!--            <div class="time-box">-->
+<!--                <span>{{ getLetterValue($route.params.id-1, "created_at"). }}</span>-->
+<!--            </div>-->
         </div>
         <div class="content">
             {{ getLetterValue($route.params.id-1,"message") }}
@@ -98,7 +98,8 @@ const getLetterValue = (i, key) => {
 }
 
 .content {
-    //padding: 16px;
+    padding: 1rem 0;
     flex-grow: 1;
+    text-align: left;
 }
 </style>

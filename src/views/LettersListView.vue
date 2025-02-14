@@ -122,6 +122,13 @@ a {
             height: 100%;
             object-fit: fill;
         }
+
+        span {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+        }
     }
 }
 
