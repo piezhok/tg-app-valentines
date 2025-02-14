@@ -43,6 +43,10 @@ const getName = (i) => {
         return "Аноним"
     }
 }
+
+const getLetterValue = (i, key) => {
+    return currentPage.value[i][key]
+}
 </script>
 
 <template>
@@ -53,11 +57,11 @@ const getName = (i) => {
             </router-link>
             <div class="username">{{ getName($route.params.id-1) }}</div>
             <div class="time-box">
-                <span>{{ currentPage.value[$route.params.id-1]["created_at"] }}</span>
+                <span>{{ getLetterValue($route.params.id-1, "created_at") }}</span>
             </div>
         </div>
         <div class="content">
-            {{ currentPage.value[$route.params.id-1]["message"] }}
+            {{ getLetterValue($route.params.id-1,"message") }}
         </div>
     </div>
 </template>
